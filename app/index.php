@@ -1,0 +1,6 @@
+<? 
+
+
+echo "HOLA MUNDO";
+
+?>
