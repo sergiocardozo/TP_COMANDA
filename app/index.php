@@ -22,7 +22,7 @@ $dotenv->safeLoad();
 
 // Instantiate App
 $app = AppFactory::create();
-$app->setBasePath('/UTN/TP_COMANDA/app');
+/* $app->setBasePath('/UTN/TP_COMANDA/app'); */
 // Add error middleware
 $app->addBodyParsingMiddleware();
 
