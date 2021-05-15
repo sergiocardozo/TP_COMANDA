@@ -28,7 +28,7 @@ class Usuario
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT nommbre, apellido, usuario, clave, update_at, created_at FROM usuarios");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT nombre, apellido, usuario, clave, update_at, created_at FROM usuarios");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
@@ -37,8 +37,8 @@ class Usuario
     public static function obtenerUsuario($usuario)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, usuario, clave, FROM usuarios WHERE usuario = :usuario");
-        $consulta->bindValue(':usuario', $usuario, PDO::PARAM_STR);
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, usuario, clave, FROM usuarios WHERE nombre = :nombre");
+        $consulta->bindValue(':nombre', $usuario, PDO::PARAM_STR);
         $consulta->execute();
 
         return $consulta->fetchObject('Usuario');
