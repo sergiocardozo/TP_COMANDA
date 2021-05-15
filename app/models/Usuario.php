@@ -14,7 +14,7 @@ class Usuario
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (nombre, apellido, idRol, clave, usuario) VALUES (:nombre, :apellido, :idRol, :clave, :usuario)");
-        $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $claveHash = password_hash($this->_clave, PASSWORD_DEFAULT);
         $consulta->bindValue(':nombre', $this->_nombre, PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $this->_apellido, PDO::PARAM_STR);
         $consulta->bindValue(':idRol', $this->_idRol, PDO::PARAM_INT);
