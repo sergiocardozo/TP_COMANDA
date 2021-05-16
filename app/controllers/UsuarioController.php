@@ -7,15 +7,7 @@ class UsuarioController extends Usuario implements IApiUsable
     public function CargarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
-/* idUsuario
-nombre
-apellido
-idRol
-clave
-usuario
-update_at
-created_at
- */
+
         $nombre = $parametros['nombre'];
         $apellido = $parametros['apellido'];
         $idRol = $parametros['idRol'];
@@ -24,11 +16,11 @@ created_at
 
         // Creamos el usuario
         $usr = new Usuario();
-        $usr->_nombre = $nombre;
-        $usr->_apellido = $apellido;
-        $usr->_idRol = $idRol;
-        $usr->_clave = $clave;
-        $usr->_usuario = $usuario;
+        $usr->nombre = $nombre;
+        $usr->apellido = $apellido;
+        $usr->idRol = $idRol;
+        $usr->clave = $clave;
+        $usr->usuario = $usuario;
         $usr->crearUsuario();
 
         $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
@@ -63,10 +55,11 @@ created_at
     public function ModificarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
-
-        $nombre = $parametros['nombre'];
-        Usuario::modificarUsuario($nombre);
-
+        $usuario = new Usuario();
+        $usuario->nombre = $parametros['nombre'];
+        $usuario->usuario = $parametros['usuario'];
+        $usuario->clave = $parametros['clave'];
+        Usuario::modificarUsuario($usuario);
         $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
 
         $response->getBody()->write($payload);
@@ -78,7 +71,7 @@ created_at
     {
         $parametros = $request->getParsedBody();
 
-        $usuarioId = $parametros['usuarioId'];
+        $usuarioId = $parametros['id'];
         Usuario::borrarUsuario($usuarioId);
 
         $payload = json_encode(array("mensaje" => "Usuario borrado con exito"));
