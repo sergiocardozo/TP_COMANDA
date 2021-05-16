@@ -1,0 +1,734 @@
+{
+	"info": {
+		"_postman_id": "33f30838-9883-4e6f-bb10-33029fd9a5dd",
+		"name": "TP_COMANDA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Get solo uno por nombre",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/sergio",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios",
+								"sergio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get todos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "sergio",
+									"type": "text"
+								},
+								{
+									"key": "apellido",
+									"value": "cardozo",
+									"type": "text"
+								},
+								{
+									"key": "idRol",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "usuario",
+									"value": "scard",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Alta Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "apellido",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "idRol",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "usuario",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put Usuarios por nombre",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "sergio",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "4567",
+									"type": "text"
+								},
+								{
+									"key": "usuario",
+									"value": "asdasd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete usuario por id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "Post Insertar producto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "descripcion",
+									"value": "Sprite",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "250",
+									"type": "text"
+								},
+								{
+									"key": "idRol",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "tiempoPreparacion",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"productos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Producto descripcion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/Sprite",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"productos",
+								"Sprite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get traer todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"productos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar producto por descripcion",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "descripcion",
+									"value": "Sprite",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "400",
+									"type": "text"
+								},
+								{
+									"key": "tiempoPreparacion",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"productos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar producto por descripcion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "descripcion",
+									"value": "Sprite",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"productos",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mesas",
+			"item": [
+				{
+					"name": "Post Insertar mesa",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoMesa",
+									"value": "ME01",
+									"type": "text"
+								},
+								{
+									"key": "idEstadoMesa",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"mesa",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Una Mesa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/ME01",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"mesa",
+								"ME01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Todas las mesas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"mesa",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar una mesa",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "codigoMesa",
+									"value": "ME01",
+									"type": "text"
+								},
+								{
+									"key": "idEstadoMesa",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"mesa",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar una mesa",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"mesa",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Insertar Pedidos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "idEstadoPedido",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "codigoPedido",
+									"value": "AAAAA",
+									"type": "text"
+								},
+								{
+									"key": "codigoMesa",
+									"value": "ME02",
+									"type": "text"
+								},
+								{
+									"key": "idUsuario",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "producto",
+									"value": "Sprite",
+									"type": "text"
+								},
+								{
+									"key": "nombreCliente",
+									"value": "Jorge",
+									"type": "text"
+								},
+								{
+									"key": "imagen",
+									"type": "file",
+									"src": "/C:/Users/sergp/Documents/PROG3/mesa-tolix.jpg"
+								},
+								{
+									"key": "tiempo",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Uno",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/Jorge",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								"Jorge"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar por codigo pedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idEstadoPedido",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "codigoMesa",
+									"value": "ME04",
+									"type": "text"
+								},
+								{
+									"key": "idUsuario",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "producto",
+									"value": "Sprite",
+									"type": "text"
+								},
+								{
+									"key": "codigoPedido",
+									"value": "AAAAA",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar pedido por id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

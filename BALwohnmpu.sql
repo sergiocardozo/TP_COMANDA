@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-05-2021 a las 22:28:04
+-- Tiempo de generación: 16-05-2021 a las 23:21:21
 -- Versión del servidor: 8.0.13-4
 -- Versión de PHP: 7.2.24-0ubuntu0.18.04.7
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `BALwohnmpu`
 --
+CREATE DATABASE IF NOT EXISTS `BALwohnmpu` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `BALwohnmpu`;
 
 -- --------------------------------------------------------
 
@@ -32,8 +34,18 @@ CREATE TABLE `estado_mesa` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(100) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `estado_mesa`
+--
+
+INSERT INTO `estado_mesa` (`id`, `descripcion`) VALUES
+(1, 'Esperando...'),
+(2, 'Comiendo...'),
+(3, 'Pagando...'),
+(4, 'Cerrada...');
 
 -- --------------------------------------------------------
 
@@ -45,8 +57,19 @@ CREATE TABLE `estado_pedidos` (
   `id` int(11) NOT NULL,
   `estado` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `estado_pedidos`
+--
+
+INSERT INTO `estado_pedidos` (`id`, `estado`) VALUES
+(1, 'Recibido'),
+(2, 'En Preparacion'),
+(3, 'Listo para Servir'),
+(4, 'En Mesa'),
+(5, 'Cobrado');
 
 -- --------------------------------------------------------
 
@@ -58,8 +81,18 @@ CREATE TABLE `estado_productos` (
   `id` int(11) NOT NULL,
   `estado` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `estado_productos`
+--
+
+INSERT INTO `estado_productos` (`id`, `estado`) VALUES
+(1, 'Pendiente'),
+(2, 'En Preparacion'),
+(3, 'Listo para Servir'),
+(4, 'Servido');
 
 -- --------------------------------------------------------
 
@@ -72,8 +105,15 @@ CREATE TABLE `mesas` (
   `codigoMesa` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `idEstadoMesa` int(11) NOT NULL,
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `mesas`
+--
+
+INSERT INTO `mesas` (`id`, `codigoMesa`, `idEstadoMesa`) VALUES
+(2, 'ME01', 2);
 
 -- --------------------------------------------------------
 
@@ -92,8 +132,15 @@ CREATE TABLE `pedidos` (
   `imagen` varchar(200) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `tiempo` int(11) NOT NULL,
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `pedidos`
+--
+
+INSERT INTO `pedidos` (`id`, `idEstadoPedido`, `codigoPedido`, `codigoMesa`, `idUsuario`, `producto`, `nombreCliente`, `imagen`, `tiempo`) VALUES
+(2, 2, 'AAAAA', 'ME04', 4, 'Sprite', 'Jorge', '/tmp/phpO0hqge', 30);
 
 -- --------------------------------------------------------
 
@@ -108,8 +155,15 @@ CREATE TABLE `productos` (
   `idRol` int(11) NOT NULL,
   `tiempoPreparacion` int(11) NOT NULL,
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id`, `descripcion`, `precio`, `idRol`, `tiempoPreparacion`) VALUES
+(2, 'Sprite', 250, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -123,7 +177,7 @@ CREATE TABLE `productos_pedidos` (
   `idProducto` int(11) NOT NULL,
   `idEstadoProducto` int(11) NOT NULL,
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -135,9 +189,20 @@ CREATE TABLE `productos_pedidos` (
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `cargo` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id`, `cargo`) VALUES
+(1, 'Socio'),
+(2, 'Cocinero'),
+(3, 'Cervezero'),
+(4, 'Mozo'),
+(5, 'Bartender');
 
 -- --------------------------------------------------------
 
@@ -152,9 +217,16 @@ CREATE TABLE `usuarios` (
   `idRol` int(11) NOT NULL,
   `clave` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `usuario` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
-  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `idRol`, `clave`, `usuario`) VALUES
+(2, 'sergio', 'cardozo', 2, '4567', 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -169,7 +241,7 @@ CREATE TABLE `ventas` (
   `usuario` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `mesa` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -244,37 +316,37 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `estado_mesa`
 --
 ALTER TABLE `estado_mesa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `estado_pedidos`
 --
 ALTER TABLE `estado_pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `estado_productos`
 --
 ALTER TABLE `estado_productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `mesas`
 --
 ALTER TABLE `mesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `productos_pedidos`
@@ -286,13 +358,13 @@ ALTER TABLE `productos_pedidos`
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
