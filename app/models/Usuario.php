@@ -13,9 +13,9 @@ class Usuario
     public function crearUsuario()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (id, nombre, apellido, idRol, clave, usuario) VALUES (:id, :nombre, :apellido, :idRol, :clave, :usuario)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (nombre, apellido, idRol, clave, usuario) VALUES (:nombre, :apellido, :idRol, :clave, :usuario)");
         $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
-        $consulta->bindValue(':id', $this->nombre, PDO::PARAM_STR);
+        
         $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
         $consulta->bindValue(':idRol', $this->idRol, PDO::PARAM_INT);
@@ -38,7 +38,7 @@ class Usuario
     public static function obtenerUsuario($usuario)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, nombre, apellido, usuario, clave FROM usuarios WHERE nombre = :nombre");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE nombre = :nombre");
         $consulta->bindValue(':nombre', $usuario, PDO::PARAM_STR);
         $consulta->execute();
 
@@ -49,8 +49,9 @@ class Usuario
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDato->prepararConsulta("UPDATE usuarios SET usuario = :usuario, clave = :clave WHERE nombre = :nombre");
+        $claveHash = password_hash($usuario->clave, PASSWORD_DEFAULT);
         $consulta->bindValue(':usuario', $usuario->usuario, PDO::PARAM_STR);
-        $consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_STR);
+        $consulta->bindValue(':clave', $claveHash, PDO::PARAM_STR);
         $consulta->bindValue(':nombre', $usuario->nombre, PDO::PARAM_STR);
         $consulta->execute(); 
     }
