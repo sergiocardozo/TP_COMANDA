@@ -31,7 +31,7 @@ class PedidoController extends Pedido implements IApiUsable
         $pedidos->tiempo = $tiempo;
         $pedidos->crearPedido();
 
-        $payload = json_encode(array("mensaje" => "Mesa creada con exito"));
+        $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
 
         $response->getBody()->write($payload);
         return $response
@@ -70,7 +70,7 @@ class PedidoController extends Pedido implements IApiUsable
         $pedido->producto = $parametros['producto'];
         $pedido->codigoPedido = $parametros['codigoPedido'];
         Pedido::modificarPedido($pedido);
-        $payload = json_encode(array("mensaje" => "Mesa modificada con exito"));
+        $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
 
         $response->getBody()->write($payload);
         return $response
@@ -84,7 +84,7 @@ class PedidoController extends Pedido implements IApiUsable
         $idMesa = $parametros['id'];
         Pedido::borrarPedido($idMesa);
 
-        $payload = json_encode(array("mensaje" => "Mesa borrada con exito"));
+        $payload = json_encode(array("mensaje" => "Pedido borrado con exito"));
 
         $response->getBody()->write($payload);
         return $response
