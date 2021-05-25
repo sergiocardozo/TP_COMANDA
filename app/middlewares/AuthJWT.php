@@ -30,12 +30,14 @@ class AutentificadorJWT {
                 self::$claveSecreta,
                 self::$tipoEncriptacion
             );
+
         } catch (Exception $e) {
             throw $e;
         }
         if ($decodificado->aud !== self::Aud()) {
             throw new Exception("No es el usuario valido");
         }
+        
     }
 
 
@@ -53,11 +55,12 @@ class AutentificadorJWT {
 
     public static function ObtenerData($token)
     {
-        return JWT::decode(
+        $array = JWT::decode(
             $token,
             self::$claveSecreta,
             self::$tipoEncriptacion
         )->data;
+        return $array;
     }
 
     private static function Aud()

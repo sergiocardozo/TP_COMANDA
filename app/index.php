@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
@@ -12,7 +13,9 @@ use Slim\Routing\RouteContext;
 require __DIR__ . '/../vendor/autoload.php';
 
 require_once './db/AccesoDatos.php';
+
 require_once './middlewares/AuthJWT.php';
+require_once './middlewares/MWAccesos.php';
 
 require_once './controllers/UsuarioController.php';
 require_once './controllers/ProductoController.php';
@@ -33,16 +36,19 @@ $app->addRoutingMiddleware();
 
 $app->addErrorMiddleware(true, true, true);
 
-
 // Routes
+$app->group('/login', function (RouteCollectorProxy $group) {
+  $group->post('/iniciarSesion/', \UsuarioController::class . ':IniciarSesion');
+});
+
 $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $group->get('[/]', \UsuarioController::class . ':TraerTodos');
   $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
-  $group->post('/iniciarSesion/', \UsuarioController::class . ':IniciarSesion');
   $group->post('/cargarUno/', \UsuarioController::class . ':CargarUno');
+  $group->get('/verificar/', \MWAuth::class . ':EsSocio');
   $group->post('/modificarUno/', \UsuarioController::class . ':ModificarUno');
   $group->post('/cambiarEstado/', \UsuarioController::class . ':BorrarUno');
-});
+})->add(\MWAccesos::class . ':ValidarToken')->add(\MWAccesos::class . ':EsSocio');
 
 $app->group('/productos', function (RouteCollectorProxy $group) {
   $group->post('[/]', \ProductoController::class . ':CargarUno');

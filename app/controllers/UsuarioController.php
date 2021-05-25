@@ -1,12 +1,13 @@
 <?php
-
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 require_once './models/Usuario.php';
 require_once './interfaces/IApiUsable.php';
 
 class UsuarioController extends Usuario implements IApiUsable
 {
-  public function CargarUno($request, $response, $args)
+  public function CargarUno(Request $request, Response $response, $args)
   {
     $parametros = $request->getParsedBody();
 
@@ -136,10 +137,12 @@ class UsuarioController extends Usuario implements IApiUsable
     $usuarios->usuario = $parametros['usuario'];
     $usuarios->clave = $parametros['clave'];
     $datos = Usuario::obtenerPorUsuario($usuarios);
-    
     if($datos) {
       $token = AutentificadorJWT::CrearToken($datos);
-      $payload = json_encode(array('jwt' => $token));
+      $payload = json_encode(array('jwt' => $token . ' Usuario: ' . $usuarios->usuario));
+    } else {
+      $payload = json_encode(array('error' => 'No existe el usuario'));
+      
     }
     $response->getBody()->write($payload);
     return $response->withHeader('Content-Type', 'application/json');

@@ -40,7 +40,7 @@ class Usuario
     /* Consulta a la Base de datos para verificar si hay un usuario repetido comparando nombre, apellido y nombre de usuario */
     public static function buscarRepetido($usuarios) {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE nombre = :nombre OR apellido = :apellido OR usuario = :usuario");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE (nombre = :nombre OR apellido = :apellido) AND usuario = :usuario");
         $consulta->bindValue(':nombre', $usuarios->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $usuarios->apellido, PDO::PARAM_STR);
         $consulta->bindValue(':usuario', $usuarios->usuario, PDO::PARAM_STR);
@@ -70,8 +70,9 @@ class Usuario
     public static function obtenerPorUsuario($usuario)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE usuario = :usuario");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM usuarios WHERE usuario = :usuario AND clave = :clave");
         $consulta->bindValue(':usuario', $usuario->usuario, PDO::PARAM_INT);
+        $consulta->bindValue(':clave', $usuario->clave, PDO::PARAM_INT);
         
         $consulta->execute();
 
