@@ -65,12 +65,15 @@ $app->group('/productos', function (RouteCollectorProxy $group) {
   ->add(\MWAccesos::class . ':ValidarToken');
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {
-  $group->post('[/]', \MesaController::class . ':CargarUno');
   $group->get('/{mesa}', \MesaController::class . ':TraerUno');
   $group->get('[/]', \MesaController::class . ':TraerTodos');
-  $group->put('[/]', \MesaController::class . ':ModificarUno');
-  $group->delete('[/]', \MesaController::class . ':BorrarUno');
-});
+  $group->get('/mesaLibre/', \MesaController::class . ':TraerMesaLibre');
+  $group->post('[/]', \MesaController::class . ':CargarUno');
+  $group->post('/modificarUna/', \MesaController::class . ':ModificarUno');
+  $group->post('/cambiarEstadoMesa/', \MesaController::class . ':CambiarEstado');
+})->add(\MWAccesos::class . ':EsSocio')
+->add(\MWLogger::class . ':log')
+->add(\MWAccesos::class . ':ValidarToken');
 
 $app->group('/pedido', function (RouteCollectorProxy $group) {
   $group->post('[/]', \PedidoController::class . ':CargarUno');
