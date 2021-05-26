@@ -10,15 +10,15 @@ class ProductoController extends Producto implements IApiUsable
 
         $descripcion = $parametros['descripcion'];
         $precio = $parametros['precio'];
-        $idRol = $parametros['idRol'];
-        $tiempoPreparacion = $parametros['tiempoPreparacion'];
+        $rol = $parametros['rol'];
+        $estado = $parametros['estado'];
 
         // Creamos el producto
         $prducto = new Producto();
         $prducto->descripcion = $descripcion;
         $prducto->precio = $precio;
-        $prducto->idRol = $idRol;
-        $prducto->tiempoPreparacion = $tiempoPreparacion;
+        $prducto->rol = $rol;
+        $prducto->estado = $estado;
         $prducto->crearProducto();
 
         $payload = json_encode(array("mensaje" => "Producto creado con exito"));
@@ -30,7 +30,7 @@ class ProductoController extends Producto implements IApiUsable
 
     public function TraerUno($request, $response, $args)
     {
-        // Buscamos producto por nombre
+        // Buscamos producto por id
         $prducto = $args['producto'];
         $producto = Producto::obtenerProducto($prducto);
         $payload = json_encode($producto);
@@ -56,8 +56,11 @@ class ProductoController extends Producto implements IApiUsable
         $producto = new Producto();
         $producto->descripcion = $parametros['descripcion'];
         $producto->precio = $parametros['precio'];
-        $producto->tiempoPreparacion = $parametros['tiempoPreparacion'];
+        $producto->rol = $parametros['rol'];
+        $producto->estado = $parametros['estado'];
+        $producto->id = $parametros['id'];
         Producto::modificarProducto($producto);
+        var_dump(Producto::modificarProducto($producto));
         $payload = json_encode(array("mensaje" => "Producto modificado con exito"));
 
         $response->getBody()->write($payload);
@@ -65,14 +68,16 @@ class ProductoController extends Producto implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
-    public function BorrarUno($request, $response, $args)
+    public function EstadoProducto($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
 
-        $productoDescripcion = $parametros['descripcion'];
-        Producto::borrarProducto($productoDescripcion);
+        $producto = new Producto();
+        $producto->id = $parametros['id'];
+        $producto->estado = $parametros['estado'];
+        Producto::bajaProducto($producto);
+        $payload = json_encode(array("mensaje" => "Producto modificado con exito"));
 
-        $payload = json_encode(array("mensaje" => "Producto borrado con exito"));
 
         $response->getBody()->write($payload);
         return $response

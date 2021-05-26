@@ -46,18 +46,23 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $group->get('[/]', \UsuarioController::class . ':TraerTodos');
   $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
   $group->post('/cargarUno/', \UsuarioController::class . ':CargarUno');
-  $group->get('/verificar/', \MWAuth::class . ':EsSocio');
   $group->post('/modificarUno/', \UsuarioController::class . ':ModificarUno');
   $group->post('/cambiarEstado/', \UsuarioController::class . ':BorrarUno');
-})->add(\MWAccesos::class . ':ValidarToken')->add(\MWAccesos::class . ':EsSocio')->add(\MWLogger::class . ':log');
+})->add(\MWAccesos::class . ':EsSocio')
+  ->add(\MWLogger::class . ':log')
+  ->add(\MWAccesos::class . ':ValidarToken');
 
 $app->group('/productos', function (RouteCollectorProxy $group) {
-  $group->post('[/]', \ProductoController::class . ':CargarUno');
   $group->get('/{producto}', \ProductoController::class . ':TraerUno');
   $group->get('[/]', \ProductoController::class . ':TraerTodos');
-  $group->put('[/]', \ProductoController::class . ':ModificarUno');
-  $group->delete('[/]', \ProductoController::class . ':BorrarUno');
-});
+  $group->post('/cargarUnProducto/', \ProductoController::class . ':CargarUno')
+    ->add(\MWAccesos::class . ':EsSocio');
+  $group->post('/modificarUno/', \ProductoController::class . ':ModificarUno')
+    ->add(\MWAccesos::class . ':EsSocio');
+  $group->post('/cambiarEstado/', \ProductoController::class . ':EstadoProducto')
+    ->add(\MWAccesos::class . ':EsSocio');
+})->add(\MWLogger::class . ':log')
+  ->add(\MWAccesos::class . ':ValidarToken');
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {
   $group->post('[/]', \MesaController::class . ':CargarUno');
