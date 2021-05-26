@@ -16,6 +16,7 @@ require_once './db/AccesoDatos.php';
 
 require_once './middlewares/AuthJWT.php';
 require_once './middlewares/MWAccesos.php';
+require_once './middlewares/MWLogger.php';
 
 require_once './controllers/UsuarioController.php';
 require_once './controllers/ProductoController.php';
@@ -48,7 +49,7 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $group->get('/verificar/', \MWAuth::class . ':EsSocio');
   $group->post('/modificarUno/', \UsuarioController::class . ':ModificarUno');
   $group->post('/cambiarEstado/', \UsuarioController::class . ':BorrarUno');
-})->add(\MWAccesos::class . ':ValidarToken')->add(\MWAccesos::class . ':EsSocio');
+})->add(\MWAccesos::class . ':ValidarToken')->add(\MWAccesos::class . ':EsSocio')->add(\MWLogger::class . ':log');
 
 $app->group('/productos', function (RouteCollectorProxy $group) {
   $group->post('[/]', \ProductoController::class . ':CargarUno');
