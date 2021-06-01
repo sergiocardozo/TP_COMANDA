@@ -72,7 +72,6 @@ class UsuarioController implements IApiUsable
       $datos = Usuario::find($id);
     }
     if($id != null && $datos != null) {
-
          
       if (array_key_exists('nombre', $parametros)) {
         $datos->nombre = $parametros['nombre'];

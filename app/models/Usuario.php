@@ -17,9 +17,7 @@ class Usuario extends Model
 
     protected $fillable = [
         'nombre', 'apellido', 'rol', 'clave', 'usuario'
-    ];
-    
+    ];   
 
-    /* Consulta a la Base de Datos para crear un usuario */
     
 }

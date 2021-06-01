@@ -97,8 +97,10 @@ $app->group('/productos', function (RouteCollectorProxy $group) {
 $app->group('/mesa', function (RouteCollectorProxy $group) {
   $group->get('/{mesa}', \MesaController::class . ':TraerUno');
   $group->get('[/]', \MesaController::class . ':TraerTodos');  
+  $group->get('/mesaLibre/', \MesaController::class . ':TraerMesaLibre');  
   $group->post('[/]', \MesaController::class . ':CargarUno');
   $group->post('/modificarUna/', \MesaController::class . ':ModificarUno');
+  $group->post('/bajaMesa/', \MesaController::class . ':BorrarUno');
   
 });
 
