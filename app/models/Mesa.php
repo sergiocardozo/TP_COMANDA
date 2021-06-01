@@ -27,6 +27,17 @@ class Mesa
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Mesa');
     }
 
+    public static function obtenerMesasDisponibles($mesa)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT codigoMesa FROM mesas WHERE estadoMesa = :estadoMesa");
+        $consulta->bindValue(':estadoMesa', $mesa, PDO::PARAM_STR);
+
+        $consulta->execute();
+
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Mesa');
+    }
+
     public static function obtenerMesa($mesa)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
@@ -50,8 +61,8 @@ class Mesa
     public static function cambiarEstadoMesa($mesa)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET estadoMesa = :estadoMesa WHERE id = :id");
-        $consulta->bindValue(':id', $mesa->id, PDO::PARAM_INT);
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE mesas SET estadoMesa = :estadoMesa WHERE codigoMesa = :codigoMesa");
+        $consulta->bindValue(':codigoMesa', $mesa->codigoMesa, PDO::PARAM_INT);
         $consulta->bindValue(':estadoMesa', $mesa->estadoMesa, PDO::PARAM_STR);
         $consulta->execute();
     }

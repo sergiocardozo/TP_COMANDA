@@ -1,4 +1,7 @@
 <?php
+
+use GuzzleHttp\Psr7\Response;
+
 require_once './models/Mesa.php';
 require_once './interfaces/IApiUsable.php';
 
@@ -61,37 +64,27 @@ class MesaController extends Mesa implements IApiUsable
       ->withHeader('Content-Type', 'application/json');
   }
 
-  public function CambiarEstado($request, $response, $args)
+  public static function CambiarEstado($codigoMesa, $nuevoEstado)
   {
-    $parametros = $request->getParsedBody();
-     
+
     $mesa = new Mesa();
-    $mesa->estadoMesa = $parametros['estadoMesa'];
-    $mesa->id = $parametros['id'];
-
-    if ($mesa->estadoMesa === "Comiendo" || $mesa->estadoMesa === "Libre" || $mesa->estadoMesa === "Pagando" || $mesa->estadoMesa === "Esperando") {
-      Mesa::cambiarEstadoMesa($mesa);
-      $payload = json_encode(array("mensaje" => "Estado mesa cambiado"));
-    } else {
-      $payload = json_encode(array("error" => "Los estados validos son: Libre, Esperando, Comiendo, Pagando"));
-    }
-
-    $response->getBody()->write($payload);
-    return $response
-      ->withHeader('Content-Type', 'application/json');
+    $mesa->estadoMesa = $nuevoEstado;
+    $mesa->codigoMesa = $codigoMesa;
+    Mesa::cambiarEstadoMesa($mesa);
   }
-  public function TraerMesaLibre($request, $response, $args)
-  {
-    $mesaLibre = Mesa::obtenerTodos();
-    foreach ($mesaLibre as $value) {
 
-      if ($value->estadoMesa == "Libre") {
-        $payload = json_encode(array("listaMesasLibres" => $value));
-        break;
+  public static function TraerMesaLibre()
+  {
+    $mesaLibre = Mesa::obtenerMesasDisponibles("Libre");
+    foreach($mesaLibre as $value){
+      if ($mesaLibre != null) {
+        $newResponse = $value->codigoMesa;
+        self::cambiarEstado($value->codigoMesa, "Esperando");
+      } else {
+        $newResponse = null;
       }
-    }
-    $response->getBody()->write($payload);
-    return $response
-      ->withHeader('Content-Type', 'application/json');
+      break;
+    }    
+    return $newResponse;
   }
 }

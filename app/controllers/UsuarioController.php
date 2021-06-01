@@ -1,23 +1,22 @@
 <?php
+
+use \App\Models\Usuario;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 require_once './models/Usuario.php';
 require_once './interfaces/IApiUsable.php';
 
-class UsuarioController extends Usuario implements IApiUsable
+class UsuarioController implements IApiUsable
 {
   public function CargarUno(Request $request, Response $response, $args)
   {
     $parametros = $request->getParsedBody();
-
     $nombre = $parametros['nombre'];
     $apellido = $parametros['apellido'];
     $rol = $parametros['rol'];
     $clave = $parametros['clave'];
     $usuario = $parametros['usuario'];
-    $estado = $parametros['estado'];
-
     // Creamos el usuario
     $usr = new Usuario();
     $usr->nombre = $nombre;
@@ -25,15 +24,16 @@ class UsuarioController extends Usuario implements IApiUsable
     $usr->rol = $rol;
     $usr->clave = $clave;
     $usr->usuario = $usuario;
-    $usr->estado = $estado;
-    $datos = Usuario::buscarRepetido($usr);
-    if (is_array($datos) == true && count($datos) > 0) {
-      $payload = json_encode(array("mensaje" => "El usuario ya existe"));
+    $datos = $usr
+      ->where('usuario', '=', $parametros["usuario"])
+      ->where('nombre', '=', $parametros["nombre"])
+      ->where('apellido', '=', $parametros["apellido"])->first();
+    if ($datos) {
+      $payload = json_encode(array("error" => "el usuario ya existe"));
     } else {
-      $usr->crearUsuario();
-      $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
+      $usr->save();
+      $payload = json_encode(array("mensaje" => "usuario creado"));
     }
-
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');
@@ -43,7 +43,7 @@ class UsuarioController extends Usuario implements IApiUsable
   {
     // Buscamos usuario por nombre
     $usr = $args['usuario'];
-    $usuario = Usuario::obtenerUsuario($usr);
+    $usuario = Usuario::where('id', $usr)->first();
     $payload = json_encode($usuario);
 
     $response->getBody()->write($payload);
@@ -53,7 +53,7 @@ class UsuarioController extends Usuario implements IApiUsable
 
   public function TraerTodos($request, $response, $args)
   {
-    $lista = Usuario::obtenerTodos();
+    $lista = Usuario::all();
     $payload = json_encode(array("listaUsuario" => $lista));
 
     $response->getBody()->write($payload);
@@ -63,45 +63,48 @@ class UsuarioController extends Usuario implements IApiUsable
 
   public function ModificarUno($request, $response, $args)
   {
-    $contador = 0;
     $parametros = $request->getParsedBody();
-    $usuario = new Usuario();
-    $usuario->id = $parametros['id'];
-    $datos = Usuario::verificarId($usuario);
-    if (is_array($datos) == true && count($datos) > 0) {
+    $contador = 0;
+    $id = null;
+    $usuario = null;
 
+    if (array_key_exists('id', $parametros)) {
+      $id = $parametros['id'];
+      $datos = Usuario::find($id);
+    }
+    if($id != null && $datos != null) {
+
+         
       if (array_key_exists('nombre', $parametros)) {
-        $usuario->nombre = $parametros['nombre'];
+        $datos->nombre = $parametros['nombre'];
         $contador++;
       }
       if (array_key_exists('apellido', $parametros)) {
-        $usuario->apellido = $parametros['apellido'];
+        $datos->apellido = $parametros['apellido'];
         $contador++;
       }
       if (array_key_exists('rol', $parametros)) {
-        $usuario->rol = $parametros['rol'];
+        $datos->rol = $parametros['rol'];
         $contador++;
       }
       if (array_key_exists('usuario', $parametros)) {
-        $usuario->usuario = $parametros['usuario'];
+        $datos->usuario = $parametros['usuario'];
         $contador++;
       }
       if (array_key_exists('clave', $parametros)) {
-        $usuario->clave = $parametros['clave'];
+        $datos->clave = $parametros['clave'];
         $contador++;
       }
-      if (array_key_exists('estado', $parametros)) {
-        $usuario->estado = $parametros['estado'];
-        $contador++;
-      }
-      if ($contador > 0 && $contador <= 6) {
-        Usuario::modificarUsuario($usuario);
+      
+      if ($contador > 0 && $contador <= 5) {
+        $datos->save();
         $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
       }
+    } else if ($id == null){
+      $payload = json_encode(array("error" => "No se encontro el usuario"));
     } else {
-      $payload = json_encode(array("mensaje" => "No se encontro el usuario"));
+      $payload = json_encode(array("error" => "No hubo modificaciones"));
     }
-
 
     $response->getBody()->write($payload);
     return $response
@@ -111,17 +114,12 @@ class UsuarioController extends Usuario implements IApiUsable
   public function BorrarUno($request, $response, $args)
   {
     $parametros = $request->getParsedBody();
-    $usuario = new Usuario();
-    $usuario->id = $parametros['id'];
-    $datos = Usuario::verificarId($usuario);
-    if (is_array($datos) == true && count($datos) > 0) {
-      if (array_key_exists('estado', $parametros)) {
-        $usuario->estado = $parametros['estado'];
-      }
-      Usuario::bajaUsuario($usuario);
-      $payload = json_encode(array("mensaje" => "Estado usuario modificado con exito"));
+    $datos = Usuario::where('id', '=', $parametros['id'])->delete();
+    var_dump($datos);
+    if ($datos) {
+      $payload = json_encode(array("mensaje" => "Usuario dado de baja"));
     } else {
-      
+
       $payload = json_encode(array("mensaje" => "Usuario no encontrado"));
     }
 
@@ -133,19 +131,18 @@ class UsuarioController extends Usuario implements IApiUsable
   public function IniciarSesion($request, $response)
   {
     $parametros = $request->getParsedBody();
-    $usuarios = new Usuario();
-    $usuarios->usuario = $parametros['usuario'];
-    $usuarios->clave = $parametros['clave'];
-    $datos = Usuario::obtenerPorUsuario($usuarios);
-    if($datos) {
-      $token = AutentificadorJWT::CrearToken($datos);
-      $payload = json_encode(array('jwt' => $token . ' Usuario: ' . $usuarios->usuario));
+
+    $usuario = Usuario::where('usuario', '=', $parametros['usuario'])
+      ->select('usuario', 'clave', 'rol', 'nombre', 'apellido')
+      ->get();
+    if (count($usuario) == 1 && $usuario[0]['clave'] == $parametros['clave']) {
+      unset($usuario[0]['clave']);
+      $token = AutentificadorJWT::CrearToken($usuario[0]);
+      $payload = json_encode(array('jwt' => $token  . ' Usuario: ' . $usuario[0]['usuario']));
     } else {
       $payload = json_encode(array('error' => 'No existe el usuario'));
-      
     }
     $response->getBody()->write($payload);
     return $response->withHeader('Content-Type', 'application/json');
-  } 
-  
+  }
 }

@@ -1,19 +1,19 @@
 <?php
+namespace App\Models;
 
-class Log {
-    public $usuario;
-    public $ruta;
-    public $metodo;
-    public $ip;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-    public function CrearLog() {
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO logs(usuario, ruta, metodo, ip) VALUES (:usuario, :ruta, :metodo, :ip)");
-        $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
-        $consulta->bindValue(':ruta', $this->ruta, PDO::PARAM_STR);
-        $consulta->bindValue(':metodo', $this->metodo, PDO::PARAM_STR);
-        $consulta->bindValue(':ip', $this->ip, PDO::PARAM_STR);
-        $consulta->execute();
-        return $objAccesoDatos->obtenerUltimoId();
-    }
+class Log extends Model {
+   
+    protected $primaryKey = 'id';
+    protected $table = 'logs';
+    public $incrementing = true;
+    public $timestamps = false;
+
+
+    protected $fillable = [
+        'usuario', 'ruta', 'metodo', 'ip'
+    ];
+    
 }

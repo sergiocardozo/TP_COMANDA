@@ -3,7 +3,7 @@
 class Pedido
 {
     public $id;
-    public $idEstadoPedido;
+    public $estadoPedido;
     public $codigoPedido;
     public $codigoMesa;
     public $idUsuario;
@@ -15,8 +15,8 @@ class Pedido
     public function crearPedido()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (idEstadoPedido, codigoPedido, codigoMesa, idUsuario, producto, nombreCliente, imagen, tiempo) VALUES (:idEstadoPedido, :codigoPedido, :codigoMesa, :idUsuario, :producto, :nombreCliente, :imagen, :tiempo)");
-        $consulta->bindValue(':idEstadoPedido', $this->idEstadoPedido, PDO::PARAM_INT);
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos (estadoPedido, codigoPedido, codigoMesa, idUsuario, producto, nombreCliente, imagen, tiempo) VALUES (:estadoPedido, :codigoPedido, :codigoMesa, :idUsuario, :producto, :nombreCliente, :imagen, :tiempo)");
+        $consulta->bindValue(':estadoPedido', $this->estadoPedido, PDO::PARAM_INT);
         $consulta->bindValue(':codigoPedido', $this->codigoPedido, PDO::PARAM_STR);
         $consulta->bindValue(':codigoMesa', $this->codigoMesa, PDO::PARAM_STR);
         $consulta->bindValue(':idUsuario', $this->idUsuario, PDO::PARAM_INT);
@@ -37,7 +37,14 @@ class Pedido
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
     }
+    public static function ObtenerDiferenciaMinutos($id) {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT TIMESTAMPDIFF(MINUTE, created_at, update_at) as tiempo from pedidos WHERE id = :id");
+        $consulta->bindValue(':id', $id, PDO::PARAM_INT);
+        $consulta->execute();
 
+        return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
+    }
     public static function obtenerPedido($pedido)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
@@ -47,12 +54,20 @@ class Pedido
 
         return $consulta->fetchObject('Pedido');
     }
+    public static function obtenerCodigoPedido()
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT codigoPedido, codigoMesa FROM pedidos");
+        $consulta->execute();
+
+        return $consulta->fetchObject('Pedido');
+    }
 
     public static function modificarPedido($pedido)
     {
         $objAccesoDato = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDato->prepararConsulta("UPDATE pedidos SET idEstadoPedido = :idEstadoPedido, codigoMesa = :codigoMesa, idUsuario = :idUsuario, producto = :producto WHERE codigoPedido = :codigoPedido");
-        $consulta->bindValue(':idEstadoPedido', $pedido->idEstadoPedido, PDO::PARAM_INT);
+        $consulta = $objAccesoDato->prepararConsulta("UPDATE pedidos SET estadoPedido = :estadoPedido, codigoMesa = :codigoMesa, idUsuario = :idUsuario, producto = :producto WHERE codigoPedido = :codigoPedido");
+        $consulta->bindValue(':estadoPedido', $pedido->estadoPedido, PDO::PARAM_INT);
         $consulta->bindValue(':codigoMesa', $pedido->codigoMesa, PDO::PARAM_STR);
         $consulta->bindValue(':idUsuario', $pedido->idUsuario, PDO::PARAM_INT);
         $consulta->bindValue(':producto', $pedido->producto, PDO::PARAM_STR);

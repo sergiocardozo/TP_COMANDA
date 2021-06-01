@@ -9,11 +9,11 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-require_once './db/AccesoDatos.php';
-
+/* require_once './db/AccesoDatos.php'; */
 require_once './middlewares/AuthJWT.php';
 require_once './middlewares/MWAccesos.php';
 require_once './middlewares/MWLogger.php';
@@ -37,6 +37,36 @@ $app->addRoutingMiddleware();
 
 $app->addErrorMiddleware(true, true, true);
 
+//Eloquent
+/* $container=$app->getContainer();
+
+$capsule = new Capsule;
+$capsule->addConnection([
+    'driver'    => 'mysql',
+    'host'      => $_ENV['MYSQL_HOST'],
+    'database'  => $_ENV['MYSQL_DB'],
+    'username'  => $_ENV['MYSQL_USER'],
+    'password'  => $_ENV['MYSQL_PASS'],
+    'charset'   => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix'    => '',
+]); */
+$container=$app->getContainer();
+
+$capsule = new Capsule;
+$capsule->addConnection([
+    'driver'    => 'mysql',
+    'host'      => 'localhost',
+    'database'  => 'BALwohnmpu',
+    'username'  => 'root',
+    'password'  => '',
+    'charset'   => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix'    => '',
+]);
+
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
 // Routes
 $app->group('/login', function (RouteCollectorProxy $group) {
   $group->post('/iniciarSesion/', \UsuarioController::class . ':IniciarSesion');
@@ -47,10 +77,10 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $group->get('/{usuario}', \UsuarioController::class . ':TraerUno');
   $group->post('/cargarUno/', \UsuarioController::class . ':CargarUno');
   $group->post('/modificarUno/', \UsuarioController::class . ':ModificarUno');
-  $group->post('/cambiarEstado/', \UsuarioController::class . ':BorrarUno');
-})->add(\MWAccesos::class . ':EsSocio')
+  $group->post('/bajaEmpleado/', \UsuarioController::class . ':BorrarUno');
+})/* ->add(\MWAccesos::class . ':EsSocio')
   ->add(\MWLogger::class . ':log')
-  ->add(\MWAccesos::class . ':ValidarToken');
+  ->add(\MWAccesos::class . ':ValidarToken') */;
 
 $app->group('/productos', function (RouteCollectorProxy $group) {
   $group->get('/{producto}', \ProductoController::class . ':TraerUno');
@@ -66,14 +96,11 @@ $app->group('/productos', function (RouteCollectorProxy $group) {
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {
   $group->get('/{mesa}', \MesaController::class . ':TraerUno');
-  $group->get('[/]', \MesaController::class . ':TraerTodos');
-  $group->get('/mesaLibre/', \MesaController::class . ':TraerMesaLibre');
+  $group->get('[/]', \MesaController::class . ':TraerTodos');  
   $group->post('[/]', \MesaController::class . ':CargarUno');
   $group->post('/modificarUna/', \MesaController::class . ':ModificarUno');
-  $group->post('/cambiarEstadoMesa/', \MesaController::class . ':CambiarEstado');
-})->add(\MWAccesos::class . ':EsSocio')
-->add(\MWLogger::class . ':log')
-->add(\MWAccesos::class . ':ValidarToken');
+  
+});
 
 $app->group('/pedido', function (RouteCollectorProxy $group) {
   $group->post('[/]', \PedidoController::class . ':CargarUno');

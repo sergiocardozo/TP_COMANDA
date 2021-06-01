@@ -6,18 +6,17 @@ use Slim\Psr7\Response;
 
 class MWAccesos
 {
-    public function ValidarToken(Request $request, RequestHandler $rHandler) : Response
+    public function ValidarToken(Request $request, RequestHandler $rHandler): Response
     {
         $header = $request->getHeaderLine('Authorization');
         $response = new Response();
-        if(!empty($header)){
+        if (!empty($header)) {
             $token = trim(explode("Bearer", $header)[1]);
             AutentificadorJWT::VerificarToken($token);
             $response = $rHandler->handle($request);
         } else {
             $response->getBody()->write(json_encode(array("error" => "Falta ingresar el token")));
             $response = $response->withStatus(401);
-
         }
         return  $response->withHeader('Content-Type', 'application/json');
     }
@@ -29,13 +28,11 @@ class MWAccesos
         if (!empty($header)) {
             $token = trim(explode("Bearer", $header)[1]);
             $data = AutentificadorJWT::ObtenerData($token);
-            foreach ($data as $value) {
-                if ($value->rol === "Socio") {
-                    $response = $handler->handle($request);
-                } else {
-                    $response->getBody()->write(json_encode(array("error" => "Solo los socios tienen acceso")));
-                    $response = $response->withStatus(401);
-                }
+            if ($data->rol == "Socio") {
+                $response = $handler->handle($request);
+            } else {
+                $response->getBody()->write(json_encode(array("error" => "Solo los socios tienen acceso")));
+                $response = $response->withStatus(401);
             }
         } else {
             $response->getBody()->write(json_encode(array("error" => "Falta ingresar el token")));
