@@ -85,14 +85,14 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
 $app->group('/productos', function (RouteCollectorProxy $group) {
   $group->get('/{producto}', \ProductoController::class . ':TraerUno');
   $group->get('[/]', \ProductoController::class . ':TraerTodos');
-  $group->post('/cargarUnProducto/', \ProductoController::class . ':CargarUno')
-    ->add(\MWAccesos::class . ':EsSocio');
-  $group->post('/modificarUno/', \ProductoController::class . ':ModificarUno')
-    ->add(\MWAccesos::class . ':EsSocio');
-  $group->post('/cambiarEstado/', \ProductoController::class . ':EstadoProducto')
-    ->add(\MWAccesos::class . ':EsSocio');
-})->add(\MWLogger::class . ':log')
-  ->add(\MWAccesos::class . ':ValidarToken');
+  $group->post('/cargarUnProducto/', \ProductoController::class . ':CargarUno')/* 
+    ->add(\MWAccesos::class . ':EsSocio') */;
+  $group->post('/modificarUno/', \ProductoController::class . ':ModificarUno')/* 
+    ->add(\MWAccesos::class . ':EsSocio') */;
+  $group->post('/bajaProducto/', \ProductoController::class . ':BorrarUno')/* 
+    ->add(\MWAccesos::class . ':EsSocio') */;
+})/* ->add(\MWLogger::class . ':log')
+  ->add(\MWAccesos::class . ':ValidarToken') */;
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {
   $group->get('/{mesa}', \MesaController::class . ':TraerUno');

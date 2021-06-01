@@ -24,8 +24,7 @@ class UsuarioController implements IApiUsable
     $usr->rol = $rol;
     $usr->clave = $clave;
     $usr->usuario = $usuario;
-    $datos = $usr
-      ->where('usuario', '=', $parametros["usuario"])
+    $datos = $usr->where('usuario', '=', $parametros["usuario"])
       ->where('nombre', '=', $parametros["nombre"])
       ->where('apellido', '=', $parametros["apellido"])->first();
     if ($datos) {
@@ -66,7 +65,7 @@ class UsuarioController implements IApiUsable
     $parametros = $request->getParsedBody();
     $contador = 0;
     $id = null;
-    $usuario = null;
+    $datos = null;
 
     if (array_key_exists('id', $parametros)) {
       $id = $parametros['id'];
@@ -115,7 +114,6 @@ class UsuarioController implements IApiUsable
   {
     $parametros = $request->getParsedBody();
     $datos = Usuario::where('id', '=', $parametros['id'])->delete();
-    var_dump($datos);
     if ($datos) {
       $payload = json_encode(array("mensaje" => "Usuario dado de baja"));
     } else {
