@@ -110,6 +110,9 @@ $app->group('/pedido', function (RouteCollectorProxy $group) {
   $group->get('[/]', \PedidoController::class . ':TraerTodos');
   $group->put('[/]', \PedidoController::class . ':ModificarUno');
   $group->delete('[/]', \PedidoController::class . ':BorrarUno');
+  $group->post('/prepararPedido', \PedidoController::class . ':PrepararPedido');
+  $group->post('/terminarPedido', \PedidoController::class . ':TerminarPedido');
+  $group->post('/servirPedido', \PedidoController::class . ':ServirPedido');
 });
 
 $app->get('[/]', function (Request $request, Response $response) {

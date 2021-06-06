@@ -91,7 +91,7 @@ class PedidoController implements IApiUsable
       ->withHeader('Content-Type', 'application/json');
   }
 
-  
+
 
   public function TraerUno($request, $response, $args)
   {
@@ -122,14 +122,48 @@ class PedidoController implements IApiUsable
   public function ModificarUno($request, $response, $args)
   {
     $parametros = $request->getParsedBody();
-    $pedido = new Pedido();
-    $pedido->estadoPedido = $parametros['estadoPedido'];
-    $pedido->codigoMesa = $parametros['codigoMesa'];
-    $pedido->idUsuario = $parametros['idUsuario'];
-    $pedido->producto = $parametros['producto'];
-    $pedido->codigoPedido = $parametros['codigoPedido'];
-    Pedido::modificarPedido($pedido);
-    $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
+    $id = null;
+    $pedido = null;
+    $contadorModificaciones = 0;
+    if (array_key_exists("id", $parametros)) {
+      $id = $parametros['id'];
+      $pedido = Pedido::find($id);
+    }
+
+    if (array_key_exists("producto", $parametros) && $id != null && $pedido != null) {
+      $pedido->producto = $parametros["producto"];
+      $contadorModificaciones++;
+      //Borra el pedido de productos antiguo y lo reemplaza por el nuevo en 
+      //la tabla producto_pedido
+      Productos_pedidos::where("codigoPedido", "=", $pedido->codigoPedido)->delete();
+      $productos = explode(",", $parametros["producto"]);
+      for ($i = 0; $i < count($productos); $i++) {
+        $pedido_producto = new Productos_pedidos();
+        $pedido_producto->codigoPedido = $pedido->codigoPedido;
+        $pedido_producto->idProducto = $productos[$i];
+        $pedido_producto->estadoProducto = "Pendiente";
+        $pedido_producto->save();
+      }
+    }
+    if (array_key_exists("idUsuario", $parametros) && $id != null && $pedido != null) {
+      $pedido->idUsuario = $parametros["idUsuario"];
+      $contadorModificaciones++;
+    }
+    if (array_key_exists("nombreCliente", $parametros) && $id != null && $pedido != null) {
+      $pedido->nombreCliente = $parametros["nombreCliente"];
+      $contadorModificaciones++;
+    }
+    if ($contadorModificaciones > 0 && $contadorModificaciones <= 6 && $id != null && $pedido != null) {
+      $pedido->estadoPedido = "Pendiente";
+      $pedido->save();
+      $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
+    } else if ($id == null) {
+      $payload = json_encode(array("error" => "El id no es valido"));
+    } else if ($id != null && $pedido == null) {
+      $payload = json_encode(array("error" => "No existe pedido con ese id"));
+    } else {
+      $payload = json_encode(array("error" => "No hay modificaciones"));
+    }
 
     $response->getBody()->write($payload);
     return $response
@@ -151,6 +185,106 @@ class PedidoController implements IApiUsable
       $payload = json_encode(array("error" => "El pedido no existe"));
     }
 
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+  public static function CambiarEstado($codigoPedido, $estadoPedido)
+  {
+    $pedido = Pedido::where('codigoPedido', $codigoPedido)->first();
+    $pedido->estadoPedido = $estadoPedido;
+    if ($estadoPedido == "Listo Para Servir") { //listo para servir
+      $pedido->tiempo = 0;
+    }
+    $pedido->save();
+  }
+  public static function CambiarEstadoPedidosProducto($codigo, $encargado, $estadoInicial, $estadoactual)
+  {
+    $ret = false;
+    $data = Productos_pedidos::where('estadoProducto', '=', $estadoInicial)
+      ->where('codigoPedido', '=', $codigo)
+      ->get();
+    foreach ($data as $value) {
+      $prod = Producto::where('id', '=', $value->idProducto)->first();
+      if ($encargado == "Socio") {
+        $value->estadoProducto = $estadoactual;
+        $value->save();
+        $ret = true;
+      } else if ($prod->rol == $encargado) {
+        $value->estadoProducto = $estadoactual;
+        $value->save();
+        $ret = true;
+      }
+    }
+    return $ret;
+  }
+  public function PrepararPedido($request, $response, $args)
+  {
+    $header = $request->getHeaderLine('Authorization');
+    $token = trim(explode("Bearer", $header)[1]);
+    $data = AutentificadorJWT::ObtenerData($token);
+    $parametros = $request->getParsedBody();
+
+    $respuesta = self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], $data->rol, "Pendiente", "En Preparacion");    
+    if ($respuesta) {
+      pedidoController::CambiarEstado($parametros["codigoPedido"], 'En Preparacion');
+      $payload = json_encode(array("mensaje" => "Preparando el pedido"));
+    } else {
+      $payload = json_encode(array("error" => "El pedido no existe"));
+    }
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+  public function TerminarPedido($request, $response, $args)
+  {
+    $header = $request->getHeaderLine('Authorization');
+    $token = trim(explode("Bearer", $header)[1]);
+    $data = AutentificadorJWT::ObtenerData($token);
+    $parametros = $request->getParsedBody();
+    $respuesta = self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], $data->rol, "En Preparacion", "Listo Para Servir");
+
+    if($respuesta) {
+      $data = Productos_pedidos::where('codigoPedido', $parametros["codigoPedido"])->get();
+      $completo = true;
+      foreach ($data as $value) {
+        if ($value->estadoProducto != "Listo Para Servir") {
+          $completo = false;
+        }
+      }
+      if ($completo) {
+        pedidoController::CambiarEstado($parametros["codigoPedido"], "Listo Para Servir");
+        self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], $data->rol, "En Preparacion", "Listo Para Servir");
+      $payload = json_encode(array("mensaje" => "Se preparon todos los productos. Pedido listo para servir"));
+    } 
+    else {
+        $payload = json_encode(array("mensaje" => "Se finalizo la preparacion de los productos"));
+      }
+    } else {
+        $payload = json_encode(array("mensaje" => "No hay productos pendiente para este pedido"));
+    }
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+
+  public function ServirPedido($request, $response, $args)
+  {
+    $parametros = $request->getParsedBody();
+    $pedido = Pedido::where('codigoPedido', $parametros["codigoPedido"])->first();
+    if($pedido->estadoPedido == "Listo Para Servir") {
+      $pedido = pedido::where('codigoPedido', '=', $parametros["codigoPedido"])->first();
+      mesaController::cambiarEstado($pedido->codigoMesa, "Comiendo");
+
+      pedidoController::cambiarEstado($parametros["codigoPedido"], "Servido");
+
+      self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], "Socio", "Listo Para Servir", "Servido");
+
+        $payload = json_encode(array("mensaje" => "Pedido entregado"));
+    } else {
+      $payload = json_encode(array("mensaje" => "El pedido no esta listo para ser entregado"));
+
+    }
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');
