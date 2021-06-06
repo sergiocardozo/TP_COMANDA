@@ -1,20 +1,25 @@
 <?php
 
-class Productos_pedidos {
-    public $id;
-    public $codigoPedido;
-    public $idProducto;
-    public $estadoProducto;
+namespace App\Models;
 
-    public function crearPedidoProducto() {
-        $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO productos_pedidos (codigoPedido, idProducto, estadoProducto) VALUES (:codigoPedido, :idProducto, :estadoProducto)");
-        $consulta->bindValue(':codigoPedido', $this->codigoPedido, PDO::PARAM_STR);
-        $consulta->bindValue(':idProducto', $this->idProducto, PDO::PARAM_INT);
-        $consulta->bindValue(':estadoProducto', $this->estadoProducto, PDO::PARAM_STR);
-        
-        $consulta->execute();
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-        return $objAccesoDatos->obtenerUltimoId();
-    }
+class Productos_pedidos extends Model {
+   
+    use SoftDeletes;
+
+    protected $primaryKey = 'id';
+    protected $table = 'productos_pedidos';
+    public $incrementing = true;
+    public $timestamps = false;
+
+    const DELETE_AT = 'deleted_at';
+
+    protected $fillable = [
+         'codigoPedido',
+          'idProducto',
+           'estadoProducto'
+    ];
+    
 }

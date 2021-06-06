@@ -14,13 +14,15 @@ class MWLogger
         $response = new Response();
         if ($header) {
             $token = trim(explode("Bearer", $header)[1]);
-            try {
+            if($token) {
+
                 $data = AutentificadorJWT::ObtenerData($token);
                 if (!empty($data)) {
+                    $response = $handler->handle($request);
                     $ruta = $request->getRequestTarget();
                     $metodo = $request->getMethod();
                     $ip = $request->getServerParams("REMOTE_ADDR");
-
+                    
                     $log = new Log();
                     $log->usuario = $data->usuario;
                     $log->ruta = $ruta;
@@ -28,10 +30,14 @@ class MWLogger
                     $log->ip = $ip["REMOTE_ADDR"];
                     $log->save();
                 }
-            } catch (Exception $e) {
-                $response->getBody()->write(json_encode(array("error" => "Token Invalido")));
-                $response->withStatus(200);
+            } else {
+                $payload = json_encode(array("error" => "Token Invalido"));
+                $response->getBody()->write($payload);
             }
+        } else {
+            
+            $payload = json_encode(array("error" => "Token Invalido"));
+            $response->getBody()->write($payload);
         }
         return $response->withHeader('Content-Type', 'application/json');
     }

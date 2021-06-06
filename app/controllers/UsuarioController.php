@@ -130,7 +130,7 @@ class UsuarioController implements IApiUsable
     $parametros = $request->getParsedBody();
 
     $usuario = Usuario::where('usuario', '=', $parametros['usuario'])
-      ->select('usuario', 'clave', 'rol', 'nombre', 'apellido')
+      ->select('id', 'usuario', 'clave', 'rol', 'nombre', 'apellido')
       ->get();
     if (count($usuario) == 1 && $usuario[0]['clave'] == $parametros['clave']) {
       unset($usuario[0]['clave']);

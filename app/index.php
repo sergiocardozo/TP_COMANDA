@@ -78,8 +78,8 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $group->post('/cargarUno/', \UsuarioController::class . ':CargarUno');
   $group->post('/modificarUno/', \UsuarioController::class . ':ModificarUno');
   $group->post('/bajaEmpleado/', \UsuarioController::class . ':BorrarUno');
-})/* ->add(\MWAccesos::class . ':EsSocio')
-  ->add(\MWLogger::class . ':log')
+})->add(\MWLogger::class . ':log')/* ->add(\MWAccesos::class . ':EsSocio')
+
   ->add(\MWAccesos::class . ':ValidarToken') */;
 
 $app->group('/productos', function (RouteCollectorProxy $group) {
@@ -91,7 +91,7 @@ $app->group('/productos', function (RouteCollectorProxy $group) {
     ->add(\MWAccesos::class . ':EsSocio') */;
   $group->post('/bajaProducto/', \ProductoController::class . ':BorrarUno')/* 
     ->add(\MWAccesos::class . ':EsSocio') */;
-})/* ->add(\MWLogger::class . ':log')
+})/*->add(\MWLogger::class . ':log')
   ->add(\MWAccesos::class . ':ValidarToken') */;
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {

@@ -111,19 +111,16 @@ class MesaController implements IApiUsable
     $mesa->save();
   }
 
-  public static function TraerMesaLibre($request, $response)
+  public static function TraerMesaLibre()
   {
     $mesaLibre = Mesa::where('estadoMesa', '=', 'Libre')
       ->select('codigoMesa')->first();
     if ($mesaLibre != null) {
-      $payload = json_encode(array("mensaje " . $mesaLibre->codigoMesa));
-      self::cambiarEstado($mesaLibre->codigoMesa, "Esperando");
+      $respuesta = $mesaLibre->codigoMesa;
+      self::CambiarEstado($mesaLibre->codigoMesa, "Libre");
     } else {
-      $payload = json_encode(array("error" => "mesa no encontrada"));
-
+      $respuesta = null;
     }
-    $response->getBody()->write($payload);
-    return $response
-      ->withHeader('Content-Type', 'application/json');
+    return $respuesta;
   }
 }
