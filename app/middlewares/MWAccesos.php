@@ -48,10 +48,10 @@ class MWAccesos
         if (!empty($header)) {
             $token = trim(explode("Bearer", $header)[1]);
             $data = AutentificadorJWT::ObtenerData($token);
-            if ($data->rol != "Socio") {
+            if ($data->rol == "Mozo") {
                 $response = $handler->handle($request);
             } else {
-                $response->getBody()->write(json_encode(array("error" => "Solo los socios tienen acceso")));
+                $response->getBody()->write(json_encode(array("error" => "Solo los Mozos tienen acceso")));
                 $response = $response->withStatus(401);
             }
         } else {

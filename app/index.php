@@ -22,6 +22,7 @@ require_once './controllers/UsuarioController.php';
 require_once './controllers/ProductoController.php';
 require_once './controllers/MesaController.php';
 require_once './controllers/PedidoController.php';
+require_once './controllers/Informes.php';
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -107,9 +108,8 @@ $app->group('/mesa', function (RouteCollectorProxy $group) {
 $app->group('/pedido', function (RouteCollectorProxy $group) {
   $group->get('/{pedido}', \PedidoController::class . ':TraerUno');
   $group->get('[/]', \PedidoController::class . ':TraerTodos');
-  $group->post('[/]', \PedidoController::class . ':CargarUno')->add(\MWLogger::class . 'EsMozo')
-    ->add(\MWAccesos::class . ':EsSocio');
-  $group->put('[/]', \PedidoController::class . ':ModificarUno')->add(\MWLogger::class . 'EsMozo')
+  $group->post('[/]', \PedidoController::class . ':CargarUno')->add(\MWAccesos::class . ':EsMozo');
+  $group->put('[/]', \PedidoController::class . ':ModificarUno')->add(\MWAccesos::class . ':EsMozo')
     ->add(\MWAccesos::class . ':EsSocio');
   $group->delete('[/]', \PedidoController::class . ':BorrarUno')->add(\MWAccesos::class . ':EsSocio');
   $group->post('/prepararPedido', \PedidoController::class . ':PrepararPedido');
@@ -117,8 +117,15 @@ $app->group('/pedido', function (RouteCollectorProxy $group) {
   $group->post('/servirPedido', \PedidoController::class . ':ServirPedido');
   $group->post('/cobrarPedido', \PedidoController::class . ':CobrarPedido');
 })->add(\MWLogger::class . ':log')
-  ->add(\MWAccesos::class . ':ValidarToken');;
+  ->add(\MWAccesos::class . ':ValidarToken');
 
+  $app->group('/informes', function (RouteCollectorProxy $group) { 
+    $group->get('/mesaMasUsada', \Informes::class . ':TraerMesaMasUsada');
+    $group->get('/mesaMenosUsada', \Informes::class . ':TraerMesaMenosUsada');
+    $group->get('/mesaMayorImporte', \Informes::class . ':TraerMesaConElMayorImporte');
+    $group->get('/mesaMenorImporte', \Informes::class . ':TraerMesaConElMenorImporte');
+    $group->get('/ingresosAlSistema', \Informes::class . ':TraerTodosLogs');
+  });
 $app->get('[/]', function (Request $request, Response $response) {
   $response->getBody()->write("TP_COMANDA by Cardozo Sergio Esteban");
   return $response;
