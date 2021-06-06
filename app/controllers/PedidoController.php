@@ -3,11 +3,14 @@ require_once './models/Pedido.php';
 require_once './models/Producto.php';
 require_once './models/Productos_pedidos.php';
 require_once './models/Mesa.php';
+require_once './models/Venta.php';
 require_once './interfaces/IApiUsable.php';
 
 use \App\Models\Pedido;
 use \App\Models\Producto;
 use \App\Models\Productos_pedidos;
+use App\Models\Usuario;
+use \App\Models\Venta;
 
 class PedidoController implements IApiUsable
 {
@@ -225,7 +228,7 @@ class PedidoController implements IApiUsable
     $data = AutentificadorJWT::ObtenerData($token);
     $parametros = $request->getParsedBody();
 
-    $respuesta = self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], $data->rol, "Pendiente", "En Preparacion");    
+    $respuesta = self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], $data->rol, "Pendiente", "En Preparacion");
     if ($respuesta) {
       pedidoController::CambiarEstado($parametros["codigoPedido"], 'En Preparacion');
       $payload = json_encode(array("mensaje" => "Preparando el pedido"));
@@ -244,7 +247,7 @@ class PedidoController implements IApiUsable
     $parametros = $request->getParsedBody();
     $respuesta = self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], $data->rol, "En Preparacion", "Listo Para Servir");
 
-    if($respuesta) {
+    if ($respuesta) {
       $data = Productos_pedidos::where('codigoPedido', $parametros["codigoPedido"])->get();
       $completo = true;
       foreach ($data as $value) {
@@ -255,13 +258,12 @@ class PedidoController implements IApiUsable
       if ($completo) {
         pedidoController::CambiarEstado($parametros["codigoPedido"], "Listo Para Servir");
         self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], $data->rol, "En Preparacion", "Listo Para Servir");
-      $payload = json_encode(array("mensaje" => "Se preparon todos los productos. Pedido listo para servir"));
-    } 
-    else {
+        $payload = json_encode(array("mensaje" => "Se preparon todos los productos. Pedido listo para servir"));
+      } else {
         $payload = json_encode(array("mensaje" => "Se finalizo la preparacion de los productos"));
       }
     } else {
-        $payload = json_encode(array("mensaje" => "No hay productos pendiente para este pedido"));
+      $payload = json_encode(array("mensaje" => "No hay productos pendiente para este pedido"));
     }
     $response->getBody()->write($payload);
     return $response
@@ -272,7 +274,7 @@ class PedidoController implements IApiUsable
   {
     $parametros = $request->getParsedBody();
     $pedido = Pedido::where('codigoPedido', $parametros["codigoPedido"])->first();
-    if($pedido->estadoPedido == "Listo Para Servir") {
+    if ($pedido->estadoPedido == "Listo Para Servir") {
       $pedido = pedido::where('codigoPedido', '=', $parametros["codigoPedido"])->first();
       mesaController::cambiarEstado($pedido->codigoMesa, "Comiendo");
 
@@ -280,11 +282,39 @@ class PedidoController implements IApiUsable
 
       self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], "Socio", "Listo Para Servir", "Servido");
 
-        $payload = json_encode(array("mensaje" => "Pedido entregado"));
+      $payload = json_encode(array("mensaje" => "Pedido entregado"));
     } else {
       $payload = json_encode(array("mensaje" => "El pedido no esta listo para ser entregado"));
-
     }
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
+  public function CobrarPedido($request, $response, $args)
+  {
+    $total = 0;
+    $parametros = $request->getParsedBody();
+    $pedido = Pedido::where('codigoPedido', '=', $parametros['codigoPedido'])->first();
+    if ($pedido != null && $pedido->estadoPedido == "Servido") {
+      $venta = new Venta();
+      $venta->codigoPedido = $pedido->codigoPedido;
+      $productos = Productos_pedidos::join('productos', 'productos.id', 'productos_pedidos.idProducto')
+        ->where('codigoPedido', '=', $parametros['codigoPedido'])->get();
+      foreach ($productos as $producto) {
+        $total = $total + $producto->precio;
+      }
+      $venta->precioTotal = $total;
+      $venta->mesa = $pedido->codigoMesa;
+      $usuarioPedido = Usuario::where('id', '=', $pedido->idUsuario)->first();
+      $venta->usuario = $usuarioPedido->usuario;
+      $venta->save();
+      pedidoController::cambiarEstado($parametros['codigoPedido'], "Cobrado"); //cobrado
+      mesaController::cambiarEstado($pedido->codigoMesa, "Libre"); //cerrada
+      $payload = json_encode(array("mensaje" => "Pedido cobrado - Mesa Cerrada"));
+    } else {
+      $payload = json_encode(array("mensaje" => "Pedido no encontrado"));
+    }
+
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');
