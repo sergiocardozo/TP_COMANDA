@@ -23,6 +23,7 @@ require_once './controllers/ProductoController.php';
 require_once './controllers/MesaController.php';
 require_once './controllers/PedidoController.php';
 require_once './controllers/Informes.php';
+require_once './controllers/ManejoArchivos.php';
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -125,6 +126,7 @@ $app->group('/pedido', function (RouteCollectorProxy $group) {
     $group->get('/mesaMayorImporte', \Informes::class . ':TraerMesaConElMayorImporte');
     $group->get('/mesaMenorImporte', \Informes::class . ':TraerMesaConElMenorImporte');
     $group->get('/ingresosAlSistema', \Informes::class . ':TraerTodosLogs');
+    $group->get('/generarPDF', \ManejoArchivos::class . ':GenerarPDF');
   });
 $app->get('[/]', function (Request $request, Response $response) {
   $response->getBody()->write("TP_COMANDA by Cardozo Sergio Esteban");

@@ -1,8 +1,11 @@
 <?php
+require_once __DIR__ . './Clases/FileManager.php';
+require_once __DIR__ . './ManejoArchivos.php';
 
 use App\Models\Log;
 use \App\Models\Pedido;
 use App\Models\Venta;
+use mikehaertl\wkhtmlto\Pdf;
 
 class Informes
 {
@@ -124,16 +127,22 @@ class Informes
             ->withHeader('Content-Type', 'application/json');
     }
     public function TraerTodosLogs($request, $response, $args)
-  {
-    $lista = Log::all();
-    if(count($lista) > 0){
-        $payload = json_encode(array("listaLogs" => $lista));
-    } else {
-        $payload = json_encode(array("mensaje" => "No hubo movimientos"));
-    }
+    {
+        $lista = Log::all();
+        if (count($lista) > 0) {
+            FileManager::guardarJson($lista, './archivos/logs.csv');
+            $payload = json_encode(array("mensaje" => "archivo guardado"));
+        } else {
+            $payload = json_encode(array("mensaje" => "No hubo movimientos"));
+        }
 
-    $response->getBody()->write($payload);
-    return $response
-      ->withHeader('Content-Type', 'application/json');
-  }
+        $response->getBody()->write($payload);
+        return $response
+            ->withHeader('Content-Type', 'application/json');
+    }
+    public function GenerarPDF($request, $response, $args)
+    {
+        
+        
+    }
 }

@@ -1,0 +1,308 @@
+[
+    [
+        {
+            "id": 130,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-05-31 21:42:28"
+        },
+        {
+            "id": 131,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-05-31 21:42:40"
+        },
+        {
+            "id": 132,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-05-31 21:42:51"
+        },
+        {
+            "id": 133,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-05-31 21:44:10"
+        },
+        {
+            "id": 134,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-05-31 21:44:27"
+        },
+        {
+            "id": 135,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-01 14:48:32"
+        },
+        {
+            "id": 136,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-01 14:49:15"
+        },
+        {
+            "id": 137,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-01 14:51:42"
+        },
+        {
+            "id": 138,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-01 14:52:09"
+        },
+        {
+            "id": 139,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-01 14:52:38"
+        },
+        {
+            "id": 140,
+            "usuario": "scardozo",
+            "ruta": "\/usuarios\/cargarUno\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-01 14:53:01"
+        },
+        {
+            "id": 141,
+            "usuario": "scardozo",
+            "ruta": "\/productos\/7",
+            "metodo": "GET",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:05:31"
+        },
+        {
+            "id": 142,
+            "usuario": "scardozo",
+            "ruta": "\/productos\/",
+            "metodo": "GET",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:05:46"
+        },
+        {
+            "id": 143,
+            "usuario": "scardozo",
+            "ruta": "\/productos\/7",
+            "metodo": "GET",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:06:26"
+        },
+        {
+            "id": 144,
+            "usuario": "scardozo",
+            "ruta": "\/productos\/",
+            "metodo": "GET",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:06:31"
+        },
+        {
+            "id": 145,
+            "usuario": "scardozo",
+            "ruta": "\/productos\/",
+            "metodo": "GET",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:06:42"
+        },
+        {
+            "id": 146,
+            "usuario": "scardozo",
+            "ruta": "\/productos\/",
+            "metodo": "GET",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:07:08"
+        },
+        {
+            "id": 147,
+            "usuario": "scardozo",
+            "ruta": "\/productos\/cargarUnProducto\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:08:23"
+        },
+        {
+            "id": 148,
+            "usuario": "scardozo",
+            "ruta": "\/productos\/",
+            "metodo": "GET",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:08:57"
+        },
+        {
+            "id": 149,
+            "usuario": "scardozo",
+            "ruta": "\/pedido\/",
+            "metodo": "GET",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:21:05"
+        },
+        {
+            "id": 150,
+            "usuario": "scardozo",
+            "ruta": "\/mesa\/modificarUna\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:57:37"
+        },
+        {
+            "id": 151,
+            "usuario": "scardozo",
+            "ruta": "\/mesa\/modificarUna\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:57:48"
+        },
+        {
+            "id": 152,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 19:59:21"
+        },
+        {
+            "id": 153,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:00:45"
+        },
+        {
+            "id": 154,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:00:47"
+        },
+        {
+            "id": 155,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:02:49"
+        },
+        {
+            "id": 156,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:05:08"
+        },
+        {
+            "id": 157,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:05:17"
+        },
+        {
+            "id": 158,
+            "usuario": "scardozo",
+            "ruta": "\/pedido\/prepararPedido",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:06:16"
+        },
+        {
+            "id": 159,
+            "usuario": "scardozo",
+            "ruta": "\/pedido\/prepararPedido",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:06:30"
+        },
+        {
+            "id": 160,
+            "usuario": "scardozo",
+            "ruta": "\/pedido\/terminarPedido?codigoPedido=fmeQz",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:06:46"
+        },
+        {
+            "id": 161,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/servirPedido",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:07:00"
+        },
+        {
+            "id": 162,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/cobrarPedido",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:07:13"
+        },
+        {
+            "id": 163,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/cobrarPedido",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:07:19"
+        },
+        {
+            "id": 164,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:07:42"
+        },
+        {
+            "id": 165,
+            "usuario": "scardozo",
+            "ruta": "\/pedido\/prepararPedido",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:08:00"
+        },
+        {
+            "id": 166,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/servirPedido",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:08:22"
+        },
+        {
+            "id": 167,
+            "usuario": "Jorgitosi",
+            "ruta": "\/pedido\/cobrarPedido",
+            "metodo": "POST",
+            "ip": "::1",
+            "fecha": "2021-06-06 20:08:28"
+        }
+    ]
+]
