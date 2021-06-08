@@ -75,7 +75,6 @@ class PedidoController implements IApiUsable
         }
       }
       if (strlen($arrayDeProductosExistentes) > 0) {
-        var_dump($arrayDeProductosExistentes);
         $pedidos->producto = $arrayDeProductosExistentes;
         $pedidos->save();
         $payload = json_encode(array("pedido " . $pedidos->codigoPedido . "-" . $pedidos->codigoMesa . " cargado"));
@@ -213,7 +212,7 @@ class PedidoController implements IApiUsable
         $value->estadoProducto = $estadoactual;
         $value->save();
         $ret = true;
-      } else if ($prod->rol == $encargado) {
+      } else if ($encargado != "Socio") {
         $value->estadoProducto = $estadoactual;
         $value->save();
         $ret = true;
@@ -308,8 +307,9 @@ class PedidoController implements IApiUsable
       $usuarioPedido = Usuario::where('id', '=', $pedido->idUsuario)->first();
       $venta->usuario = $usuarioPedido->usuario;
       $venta->save();
-      pedidoController::cambiarEstado($parametros['codigoPedido'], "Cobrado"); //cobrado
-      mesaController::cambiarEstado($pedido->codigoMesa, "Libre"); //cerrada
+      
+      pedidoController::cambiarEstado($parametros['codigoPedido'], "Cobrado"); 
+      mesaController::cambiarEstado($pedido->codigoMesa, "Libre"); 
       $payload = json_encode(array("mensaje" => "Pedido cobrado - Mesa Cerrada"));
     } else {
       $payload = json_encode(array("mensaje" => "Pedido no encontrado"));

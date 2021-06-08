@@ -110,8 +110,7 @@ $app->group('/pedido', function (RouteCollectorProxy $group) {
   $group->get('/{pedido}', \PedidoController::class . ':TraerUno');
   $group->get('[/]', \PedidoController::class . ':TraerTodos');
   $group->post('[/]', \PedidoController::class . ':CargarUno')->add(\MWAccesos::class . ':EsMozo');
-  $group->put('[/]', \PedidoController::class . ':ModificarUno')->add(\MWAccesos::class . ':EsMozo')
-    ->add(\MWAccesos::class . ':EsSocio');
+  $group->put('[/]', \PedidoController::class . ':ModificarUno')->add(\MWAccesos::class . ':EsMozo');
   $group->delete('[/]', \PedidoController::class . ':BorrarUno')->add(\MWAccesos::class . ':EsSocio');
   $group->post('/prepararPedido', \PedidoController::class . ':PrepararPedido');
   $group->post('/terminarPedido', \PedidoController::class . ':TerminarPedido');
@@ -120,14 +119,19 @@ $app->group('/pedido', function (RouteCollectorProxy $group) {
 })->add(\MWLogger::class . ':log')
   ->add(\MWAccesos::class . ':ValidarToken');
 
-  $app->group('/informes', function (RouteCollectorProxy $group) { 
-    $group->get('/mesaMasUsada', \Informes::class . ':TraerMesaMasUsada');
-    $group->get('/mesaMenosUsada', \Informes::class . ':TraerMesaMenosUsada');
-    $group->get('/mesaMayorImporte', \Informes::class . ':TraerMesaConElMayorImporte');
-    $group->get('/mesaMenorImporte', \Informes::class . ':TraerMesaConElMenorImporte');
-    $group->get('/ingresosAlSistema', \Informes::class . ':TraerTodosLogs');
-    $group->get('/generarPDF', \ManejoArchivos::class . ':GenerarPDF');
-  });
+$app->group('/informes', function (RouteCollectorProxy $group) {
+  $group->get('/mesaMasUsada', \Informes::class . ':TraerMesaMasUsada');
+  $group->get('/mesaMenosUsada', \Informes::class . ':TraerMesaMenosUsada');
+  $group->get('/mesaMayorImporte', \Informes::class . ':TraerMesaConElMayorImporte');
+  $group->get('/mesaMenorImporte', \Informes::class . ':TraerMesaConElMenorImporte');
+  $group->get('/ingresosAlSistema', \Informes::class . ':TraerTodosLogs');
+  $group->post('/ventas', \ManejoArchivos::class . ':DescargaPDF');
+});
+
+$app->group('/archivos', function (RouteCollectorProxy $group) {
+  $group->post('/pdf', \ManejoArchivos::class . ':DescargaPDF');
+});
+
 $app->get('[/]', function (Request $request, Response $response) {
   $response->getBody()->write("TP_COMANDA by Cardozo Sergio Esteban");
   return $response;

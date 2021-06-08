@@ -131,7 +131,7 @@ class Informes
         $lista = Log::all();
         if (count($lista) > 0) {
             FileManager::guardarJson($lista, './archivos/logs.csv');
-            $payload = json_encode(array("mensaje" => "archivo guardado"));
+            $payload = json_encode(array("mensaje" => "archivo guardado /archivos/logs.csv"));
         } else {
             $payload = json_encode(array("mensaje" => "No hubo movimientos"));
         }
@@ -139,6 +139,15 @@ class Informes
         $response->getBody()->write($payload);
         return $response
             ->withHeader('Content-Type', 'application/json');
+    }
+    public function TraerTodasVentas($request, $response, $args)
+    {
+        $lista = Venta::all();
+        $payload = json_encode(array("listaVenta" => $lista));
+    
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
     }
     public function GenerarPDF($request, $response, $args)
     {
