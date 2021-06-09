@@ -16,7 +16,7 @@ class Usuario extends Model
     const DELETE_AT = 'deleted_at';
 
     protected $fillable = [
-        'nombre', 'apellido', 'rol', 'clave', 'usuario'
+        'nombre', 'apellido', 'rol', 'clave', 'usuario', 'estadoEmpleado'
     ];   
 
     

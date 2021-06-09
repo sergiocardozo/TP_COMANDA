@@ -7,7 +7,6 @@ use App\Models\Venta;
 use Fpdf\Fpdf;
 use Illuminate\Support\Facades\Date;
 
-require_once __DIR__ . './Clases/PDF.php';
 
 class ManejoArchivos
 {

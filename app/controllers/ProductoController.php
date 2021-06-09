@@ -113,4 +113,33 @@ class ProductoController implements IApiUsable
     return $response
       ->withHeader('Content-Type', 'application/json');
   }
+
+  public function CargarDatosCsv(Request $request, $response, $args)
+  {
+    $archivotmp = $_FILES['archivo']['tmp_name'];
+
+    $lineas = file($archivotmp);
+    $i = 0;
+    foreach ($lineas as $linea_num => $linea) {
+      if ($i != 0) {
+        $datos = explode(",", $linea);
+        $pducto = Producto::where('descripcion', '=', $datos[0])->exists();
+        if ($pducto != true) {
+          $producto = new Producto();
+          $producto->descripcion = $datos[0];
+          $producto->precio = $datos[1];
+          $producto->rol = $datos[2];
+
+          $producto->save();
+          $payload = json_encode(array("productos cargados correctamente"));
+        } else {
+          $payload = json_encode(array("el producto ya existe" . $pducto->descripcion));
+        }
+      }
+      $i++;
+    }
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');
+  }
 }

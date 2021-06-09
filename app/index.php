@@ -125,12 +125,13 @@ $app->group('/informes', function (RouteCollectorProxy $group) {
   $group->get('/mesaMayorImporte', \Informes::class . ':TraerMesaConElMayorImporte');
   $group->get('/mesaMenorImporte', \Informes::class . ':TraerMesaConElMenorImporte');
   $group->get('/ingresosAlSistema', \Informes::class . ':TraerTodosLogs');
-  $group->post('/ventas', \ManejoArchivos::class . ':DescargaPDF');
+});
+$app->group('/archivo', function (RouteCollectorProxy $group) {
+  $group->post('/pdf', \ManejoArchivos::class . ':DescargaPDF');
+  $group->post('/cargaCSV', \ProductoController::class . ':CargarDatosCsv');
+  
 });
 
-$app->group('/archivos', function (RouteCollectorProxy $group) {
-  $group->post('/pdf', \ManejoArchivos::class . ':DescargaPDF');
-});
 
 $app->get('[/]', function (Request $request, Response $response) {
   $response->getBody()->write("TP_COMANDA by Cardozo Sergio Esteban");

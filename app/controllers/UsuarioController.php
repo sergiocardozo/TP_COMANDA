@@ -130,12 +130,18 @@ class UsuarioController implements IApiUsable
     $parametros = $request->getParsedBody();
 
     $usuario = Usuario::where('usuario', '=', $parametros['usuario'])
-      ->select('id', 'usuario', 'clave', 'rol', 'nombre', 'apellido')
+      ->select('id', 'usuario', 'clave', 'rol', 'nombre', 'apellido', 'estadoEmpleado')
       ->get();
     if (count($usuario) == 1 && $usuario[0]['clave'] == $parametros['clave']) {
-      unset($usuario[0]['clave']);
-      $token = AutentificadorJWT::CrearToken($usuario[0]);
-      $payload = json_encode(array('jwt' => $token  . ' Usuario: ' . $usuario[0]['usuario']));
+      if($usuario[0]['estadoEmpleado'] == "Activo"){
+
+        unset($usuario[0]['clave']);
+        $token = AutentificadorJWT::CrearToken($usuario[0]);
+        $payload = json_encode(array('jwt' => $token  . ' Usuario: ' . $usuario[0]['usuario']));
+      } else {
+        $payload = json_encode(array('error' => 'Usuario dado de baja'));
+      }
+      
     } else {
       $payload = json_encode(array('error' => 'No existe el usuario'));
     }

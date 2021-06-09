@@ -38,14 +38,12 @@ class FileManager
         $linea = "";
         $datos = "";
         $lista = array();
-
-        if ($fileName !== "" && file_exists($fileName)) {
+        if ($fileName !== "" ) {
             $archivo = fopen($fileName, 'r');
-
             while (!feof($archivo)) {
                 $linea = fgets($archivo);
                 if (!empty($linea)) {
-                    $datos = explode("*", str_replace("\r\n", "", $linea));
+                    $datos = explode(",", str_replace("\r\n", "", $linea));
                     array_push($lista, $datos);
                 }
             }
