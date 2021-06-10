@@ -22,6 +22,7 @@ require_once './controllers/UsuarioController.php';
 require_once './controllers/ProductoController.php';
 require_once './controllers/MesaController.php';
 require_once './controllers/PedidoController.php';
+require_once './controllers/EncuestaController.php';
 require_once './controllers/Informes.php';
 require_once './controllers/ManejoArchivos.php';
 
@@ -40,7 +41,7 @@ $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 
 //Eloquent
-/* $container=$app->getContainer();
+$container=$app->getContainer();
 
 $capsule = new Capsule;
 $capsule->addConnection([
@@ -52,8 +53,8 @@ $capsule->addConnection([
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
-]); */
-$container = $app->getContainer();
+]);
+/* $container = $app->getContainer();
 
 $capsule = new Capsule;
 $capsule->addConnection([
@@ -65,7 +66,7 @@ $capsule->addConnection([
   'charset'   => 'utf8',
   'collation' => 'utf8_unicode_ci',
   'prefix'    => '',
-]);
+]); */
 
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
@@ -116,6 +117,7 @@ $app->group('/pedido', function (RouteCollectorProxy $group) {
   $group->post('/terminarPedido', \PedidoController::class . ':TerminarPedido');
   $group->post('/servirPedido', \PedidoController::class . ':ServirPedido');
   $group->post('/cobrarPedido', \PedidoController::class . ':CobrarPedido');
+  $group->post('/realizarEncuesta', \EncuestaController::class . ':AltaEncuesta');
 })->add(\MWLogger::class . ':log')
   ->add(\MWAccesos::class . ':ValidarToken');
 

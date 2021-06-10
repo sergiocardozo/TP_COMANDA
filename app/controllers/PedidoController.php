@@ -274,13 +274,14 @@ class PedidoController implements IApiUsable
     $parametros = $request->getParsedBody();
     $pedido = Pedido::where('codigoPedido', $parametros["codigoPedido"])->first();
     if ($pedido->estadoPedido == "Listo Para Servir") {
-      $pedido = pedido::where('codigoPedido', '=', $parametros["codigoPedido"])->first();
       mesaController::cambiarEstado($pedido->codigoMesa, "Comiendo");
 
       pedidoController::cambiarEstado($parametros["codigoPedido"], "Servido");
 
       self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], "Socio", "Listo Para Servir", "Servido");
-
+      $tiempoEntrada = $pedido->created_at;
+      $tiempoSalida = $pedido->update_at;
+      $pedido->tiempo = $tiempoEntrada->diff($tiempoSalida);
       $payload = json_encode(array("mensaje" => "Pedido entregado"));
     } else {
       $payload = json_encode(array("mensaje" => "El pedido no esta listo para ser entregado"));

@@ -5,7 +5,6 @@ require_once __DIR__ . './ManejoArchivos.php';
 use App\Models\Log;
 use \App\Models\Pedido;
 use App\Models\Venta;
-use mikehaertl\wkhtmlto\Pdf;
 
 class Informes
 {
