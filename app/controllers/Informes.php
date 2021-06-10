@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/Clases/FileManager.php';
+require __DIR__ . './FileManager.php';
 require_once __DIR__ . './ManejoArchivos.php';
 
 use App\Models\Log;
