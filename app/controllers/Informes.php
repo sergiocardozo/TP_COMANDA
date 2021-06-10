@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . './ManejoArchivos.php';
+require_once __DIR__ . '/FileManager.php';
+require_once __DIR__ . '/ManejoArchivos.php';
 
 use App\Models\Log;
 use \App\Models\Pedido;
