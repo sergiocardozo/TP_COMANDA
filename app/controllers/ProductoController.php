@@ -121,9 +121,9 @@ class ProductoController implements IApiUsable
     $lineas = file($archivotmp);
     $i = 0;
     foreach ($lineas as $linea_num => $linea) {
+      $datos = explode(",", $linea);
       if ($i != 0) {
-        $datos = explode(",", $linea);
-        $pducto = Producto::where('descripcion', '=', $datos[0])->exists();
+        $pducto = Producto::where('descripcion', '=', $datos[0])->first();
         if ($pducto != true) {
           $producto = new Producto();
           $producto->descripcion = $datos[0];
@@ -131,9 +131,9 @@ class ProductoController implements IApiUsable
           $producto->rol = $datos[2];
 
           $producto->save();
-          $payload = json_encode(array("productos cargados correctamente"));
+          $payload = json_encode(array("producto " . $producto->descripcion . " cargado correctamente"));
         } else {
-          $payload = json_encode(array("el producto ya existe" . $pducto->descripcion));
+          $payload = json_encode(array("Los productos de la lista ya existen en la Base de datos"));
         }
       }
       $i++;

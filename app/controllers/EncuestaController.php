@@ -2,6 +2,7 @@
 
 use \App\Models\Encuesta;
 
+require_once './Models/Encuesta.php';
 class EncuestaController
 {
 

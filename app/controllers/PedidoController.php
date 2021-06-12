@@ -51,7 +51,7 @@ class PedidoController implements IApiUsable
       if (array_key_exists("imagen", $archivo)) {
         $pedidos->imagen = $_FILES['imagen']['tmp_name'];
       }
-      $pedidos->tiempo = 1;
+      $pedidos->tiempo = $tiempo;
       $pedidos->save();
 
       $idPedidoCargado = $pedidos->id;
@@ -271,6 +271,7 @@ class PedidoController implements IApiUsable
 
   public function ServirPedido($request, $response, $args)
   {
+    $tiempo = rand(0,25);
     $parametros = $request->getParsedBody();
     $pedido = Pedido::where('codigoPedido', $parametros["codigoPedido"])->first();
     if ($pedido->estadoPedido == "Listo Para Servir") {
@@ -279,9 +280,8 @@ class PedidoController implements IApiUsable
       pedidoController::cambiarEstado($parametros["codigoPedido"], "Servido");
 
       self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], "Socio", "Listo Para Servir", "Servido");
-      $tiempoEntrada = $pedido->created_at;
-      $tiempoSalida = $pedido->update_at;
-      $pedido->tiempo = $tiempoEntrada->diff($tiempoSalida);
+      $pedido->tiempo = $tiempo;
+      $pedido->save();
       $payload = json_encode(array("mensaje" => "Pedido entregado"));
     } else {
       $payload = json_encode(array("mensaje" => "El pedido no esta listo para ser entregado"));

@@ -88,13 +88,11 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
 $app->group('/productos', function (RouteCollectorProxy $group) {
   $group->get('/{producto}', \ProductoController::class . ':TraerUno');
   $group->get('[/]', \ProductoController::class . ':TraerTodos');
-  $group->post('/cargarUnProducto/', \ProductoController::class . ':CargarUno')
-    ->add(\MWAccesos::class . ':EsSocio');
-  $group->post('/modificarUno/', \ProductoController::class . ':ModificarUno')
-    ->add(\MWAccesos::class . ':EsSocio');
-  $group->post('/bajaProducto/', \ProductoController::class . ':BorrarUno')
-    ->add(\MWAccesos::class . ':EsSocio');
-})->add(\MWLogger::class . ':log')
+  $group->post('/cargarUnProducto/', \ProductoController::class . ':CargarUno');
+  $group->post('/modificarUno/', \ProductoController::class . ':ModificarUno');
+  $group->post('/bajaProducto/', \ProductoController::class . ':BorrarUno');
+})->add(\MWAccesos::class . ':EsSocio')
+  ->add(\MWLogger::class . ':log')
   ->add(\MWAccesos::class . ':ValidarToken');
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {
@@ -112,13 +110,14 @@ $app->group('/pedido', function (RouteCollectorProxy $group) {
   $group->get('[/]', \PedidoController::class . ':TraerTodos');
   $group->post('[/]', \PedidoController::class . ':CargarUno')->add(\MWAccesos::class . ':EsMozo');
   $group->put('[/]', \PedidoController::class . ':ModificarUno')->add(\MWAccesos::class . ':EsMozo');
-  $group->delete('[/]', \PedidoController::class . ':BorrarUno')->add(\MWAccesos::class . ':EsSocio');
+  $group->delete('[/]', \PedidoController::class . ':BorrarUno');
   $group->post('/prepararPedido', \PedidoController::class . ':PrepararPedido');
   $group->post('/terminarPedido', \PedidoController::class . ':TerminarPedido');
   $group->post('/servirPedido', \PedidoController::class . ':ServirPedido');
-  $group->post('/cobrarPedido', \PedidoController::class . ':CobrarPedido');
+  $group->post('/cobrarPedido', \PedidoController::class . ':CobrarPedido')->add(\MWAccesos::class . ':EsSocio');
   $group->post('/realizarEncuesta', \EncuestaController::class . ':AltaEncuesta');
-})->add(\MWLogger::class . ':log')
+})
+  ->add(\MWLogger::class . ':log')
   ->add(\MWAccesos::class . ':ValidarToken');
 
 $app->group('/informes', function (RouteCollectorProxy $group) {
@@ -127,11 +126,13 @@ $app->group('/informes', function (RouteCollectorProxy $group) {
   $group->get('/mesaMayorImporte', \Informes::class . ':TraerMesaConElMayorImporte');
   $group->get('/mesaMenorImporte', \Informes::class . ':TraerMesaConElMenorImporte');
   $group->get('/ingresosAlSistema', \Informes::class . ':TraerTodosLogs');
+  $group->get('/peorComentario', \Informes::class . ':TraerMesaPeorComentario');
+  $group->get('/mejorComentario', \Informes::class . ':TraerMesaMejorComentario');
 });
+
 $app->group('/archivo', function (RouteCollectorProxy $group) {
   $group->post('/pdf', \ManejoArchivos::class . ':DescargaPDF');
   $group->post('/cargaCSV', \ProductoController::class . ':CargarDatosCsv');
-  
 });
 
 

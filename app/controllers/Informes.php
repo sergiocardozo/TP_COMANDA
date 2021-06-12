@@ -2,6 +2,7 @@
 require_once __DIR__ . '/FileManager.php';
 require_once __DIR__ . '/ManejoArchivos.php';
 
+use App\Models\Encuesta;
 use App\Models\Log;
 use \App\Models\Pedido;
 use App\Models\Venta;
@@ -19,7 +20,6 @@ class Informes
         foreach ($pedidos as $pedido) {
             array_push($codigoMesa, $pedido->codigoMesa);
         }
-
         $valores = array_count_values($codigoMesa);
 
         foreach ($valores as $key => $value) {
@@ -34,7 +34,7 @@ class Informes
         if ($mesasIguales == false) {
             $payload = json_encode(array("mensaje" => "La mesa mas usada es: " . $mesaMasUsada));
         } else {
-            $payload = json_encode(array("mensaje" => "No hay una mesa que se haya usado mas que la otra"));
+            $payload = json_encode(array("mensaje" => "No hay una mesa que se haya usado mas que la otra" . $valores));
         }
         $response->getBody()->write($payload);
         return $response
@@ -103,13 +103,13 @@ class Informes
         $primerVuelta = true;
         $mesasIguales = false;
         $menor = "";
-        $mesaQueMenosFacturo = "";
+        $mesaMenorPuntaje = "";
         $venta = Venta::all();
 
         foreach ($venta as $value) {
             if ($value->precioTotal < $menor || $primerVuelta == true) {
                 $menor = $value->precioTotal;
-                $mesaQueMenosFacturo = $value->mesa;
+                $mesaMenorPuntaje = $value->mesa;
                 $mesasIguales = false;
                 $primerVuelta = false;
             } elseif ($value->precioTotal == $menor) {
@@ -117,9 +117,72 @@ class Informes
             }
         }
         if ($mesasIguales == false) {
-            $payload = json_encode(array("La mesa que mas facturo es la: " . $mesaQueMenosFacturo . " y la cantidad es de: " . $menor));
+            $payload = json_encode(array("La mesa que mas facturo es la: " . $mesaMenorPuntaje . " y la cantidad es de: " . $menor));
         } else {
             $payload = json_encode(array("No hay una mesa que haya facturado menos que la otra"));
+        }
+        $response->getBody()->write($payload);
+        return $response
+            ->withHeader('Content-Type', 'application/json');
+    }
+    public function TraerMesaPeorComentario($request, $response, $args)
+    {
+        $primerVuelta = true;
+        $mesasIguales = false;
+        $menor = "";
+        $mesaMenorPuntaje = "";
+        $venta = Encuesta::all();
+
+        foreach ($venta as $value) {
+            if ($value->puntosMesa < $menor || $primerVuelta == true) {
+                $menor = $value->puntosMesa;
+                $comentario = $value->comentarios;
+                $pedido = Pedido::where('codigoPedido', '=', $value->codigoPedido)->get();
+                foreach ($pedido as $pedidos) {
+                    var_dump($pedidos);
+                    $mesaMenorPuntaje = $pedidos->codigoMesa;
+                }
+                $mesasIguales = false;
+                $primerVuelta = false;
+            } elseif ($value->puntosMesa == $menor) {
+                $mesasIguales = true;
+            }
+        }
+        if ($mesasIguales == false) {
+            $payload = json_encode(array("La mesa que mas facturo es la: " . $mesaMenorPuntaje . " y su comentario fue: " . $comentario));
+        } else {
+            $payload = json_encode(array("No hay una mesa que haya facturado menos que la otra"));
+        }
+        $response->getBody()->write($payload);
+        return $response
+            ->withHeader('Content-Type', 'application/json');
+    }
+    public function TraerMesaMejorComentario($request, $response, $args)
+    {
+
+        $primerVuelta = true;
+        $mesasIguales = false;
+        $mayor = "";
+        $mesaMenorPuntaje = "";
+        $encuesta = Encuesta::all();
+
+        foreach ($encuesta as $value) {
+            if ($value->puntosMesa > $mayor || $primerVuelta == true) {
+                $menor = $value->puntosMesa;
+                $productos = Pedido::where('codigoPedido', '=', $value->codigoPedido)->get();
+                foreach ($productos as $prod) {
+                    $mesaMenorPuntaje = $prod->codigoMesa;
+                }
+                $mesasIguales = false;
+                $primerVuelta = false;
+            } elseif ($value->puntosMesa == $mayor) {
+                $mesasIguales = true;
+            }
+        }
+        if ($mesasIguales == false) {
+            $payload = json_encode(array("La mesa con mayor puntos es la: " . $mesaMenorPuntaje . " pedido: " . $value->codigoPedido . " y el comentario fue " . $value->comentario));
+        } else {
+            $payload = json_encode(array("El puntaje minimo de la mesa es: " . $menor));
         }
         $response->getBody()->write($payload);
         return $response
@@ -143,14 +206,9 @@ class Informes
     {
         $lista = Venta::all();
         $payload = json_encode(array("listaVenta" => $lista));
-    
+
         $response->getBody()->write($payload);
         return $response
-          ->withHeader('Content-Type', 'application/json');
-    }
-    public function GenerarPDF($request, $response, $args)
-    {
-        
-        
+            ->withHeader('Content-Type', 'application/json');
     }
 }
