@@ -163,7 +163,7 @@ class Informes
         $primerVuelta = true;
         $mesasIguales = false;
         $mayor = "";
-        $mesaMenorPuntaje = "";
+        $mesaMayorPuntaje = "";
         $encuesta = Encuesta::all();
 
         foreach ($encuesta as $value) {
@@ -171,7 +171,7 @@ class Informes
                 $menor = $value->puntosMesa;
                 $productos = Pedido::where('codigoPedido', '=', $value->codigoPedido)->get();
                 foreach ($productos as $prod) {
-                    $mesaMenorPuntaje = $prod->codigoMesa;
+                    $mesaMayorPuntaje = $prod->codigoMesa;
                 }
                 $mesasIguales = false;
                 $primerVuelta = false;
@@ -180,7 +180,7 @@ class Informes
             }
         }
         if ($mesasIguales == false) {
-            $payload = json_encode(array("La mesa con mayor puntos es la: " . $mesaMenorPuntaje . " pedido: " . $value->codigoPedido . " y el comentario fue " . $value->comentario));
+            $payload = json_encode(array("La mesa con mayor puntos es la: " . $mesaMayorPuntaje . " pedido: " . $value->codigoPedido . " y el comentario fue " . $value->comentario));
         } else {
             $payload = json_encode(array("El puntaje minimo de la mesa es: " . $menor));
         }

@@ -17,6 +17,7 @@ class UsuarioController implements IApiUsable
     $rol = $parametros['rol'];
     $clave = $parametros['clave'];
     $usuario = $parametros['usuario'];
+    $estado = $parametros['estado'];
     // Creamos el usuario
     $usr = new Usuario();
     $usr->nombre = $nombre;
@@ -24,6 +25,7 @@ class UsuarioController implements IApiUsable
     $usr->rol = $rol;
     $usr->clave = $clave;
     $usr->usuario = $usuario;
+    $usr->estado = $estado;
     $datos = $usr->where('usuario', '=', $parametros["usuario"])
       ->where('nombre', '=', $parametros["nombre"])
       ->where('apellido', '=', $parametros["apellido"])->first();
@@ -93,8 +95,12 @@ class UsuarioController implements IApiUsable
         $datos->clave = $parametros['clave'];
         $contador++;
       }
+      if (array_key_exists('estado', $parametros)) {
+        $datos->estado = $parametros['estado'];
+        $contador++;
+      }
       
-      if ($contador > 0 && $contador <= 5) {
+      if ($contador > 0 && $contador <= 6) {
         $datos->save();
         $payload = json_encode(array("mensaje" => "Usuario modificado con exito"));
       }
