@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2021 a las 23:31:07
--- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 8.0.3
+-- Servidor: localhost
+-- Tiempo de generación: 14-06-2021 a las 00:25:51
+-- Versión del servidor: 8.0.13-4
+-- Versión de PHP: 7.2.24-0ubuntu0.18.04.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,10 +19,34 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `balwohnmpu`
+-- Base de datos: `BALwohnmpu`
 --
-CREATE DATABASE IF NOT EXISTS `balwohnmpu` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `balwohnmpu`;
+CREATE DATABASE IF NOT EXISTS `BALwohnmpu` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `BALwohnmpu`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `encuestas`
+--
+
+CREATE TABLE `encuestas` (
+  `id` int(10) NOT NULL,
+  `codigoPedido` varchar(10) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  `puntosMesa` int(10) NOT NULL,
+  `puntosMozo` int(10) NOT NULL,
+  `puntosRestaurante` int(10) NOT NULL,
+  `puntosCocinero` int(10) NOT NULL,
+  `comentarios` varchar(66) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `encuestas`
+--
+
+INSERT INTO `encuestas` (`id`, `codigoPedido`, `puntosMesa`, `puntosMozo`, `puntosRestaurante`, `puntosCocinero`, `comentarios`) VALUES
+(1, '6JQS2', 10, 10, 10, 10, 'Nunca comi tanto en mi vida como hoy'),
+(2, 'L2TCJ', 5, 5, 5, 5, 'No vuelvo nunca mas');
 
 -- --------------------------------------------------------
 
@@ -35,52 +60,114 @@ CREATE TABLE `logs` (
   `ruta` varchar(200) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `metodo` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `ip` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `logs`
 --
 
-INSERT INTO `logs` (`id`, `usuario`, `ruta`, `metodo`, `ip`, `fecha`) VALUES
-(130, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 00:42:28'),
-(131, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 00:42:40'),
-(132, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 00:42:51'),
-(133, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 00:44:10'),
-(134, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 00:44:27'),
-(135, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 17:48:32'),
-(136, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 17:49:15'),
-(137, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 17:51:42'),
-(138, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 17:52:09'),
-(139, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 17:52:38'),
-(140, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1', '2021-06-01 17:53:01'),
-(141, 'scardozo', '/productos/7', 'GET', '::1', '2021-06-06 22:05:31'),
-(142, 'scardozo', '/productos/', 'GET', '::1', '2021-06-06 22:05:46'),
-(143, 'scardozo', '/productos/7', 'GET', '::1', '2021-06-06 22:06:26'),
-(144, 'scardozo', '/productos/', 'GET', '::1', '2021-06-06 22:06:31'),
-(145, 'scardozo', '/productos/', 'GET', '::1', '2021-06-06 22:06:42'),
-(146, 'scardozo', '/productos/', 'GET', '::1', '2021-06-06 22:07:08'),
-(147, 'scardozo', '/productos/cargarUnProducto/', 'POST', '::1', '2021-06-06 22:08:23'),
-(148, 'scardozo', '/productos/', 'GET', '::1', '2021-06-06 22:08:57'),
-(149, 'scardozo', '/pedido/', 'GET', '::1', '2021-06-06 22:21:05'),
-(150, 'scardozo', '/mesa/modificarUna/', 'POST', '::1', '2021-06-06 22:57:37'),
-(151, 'scardozo', '/mesa/modificarUna/', 'POST', '::1', '2021-06-06 22:57:48'),
-(152, 'Jorgitosi', '/pedido/', 'POST', '::1', '2021-06-06 22:59:21'),
-(153, 'Jorgitosi', '/pedido/', 'POST', '::1', '2021-06-06 23:00:45'),
-(154, 'Jorgitosi', '/pedido/', 'POST', '::1', '2021-06-06 23:00:47'),
-(155, 'Jorgitosi', '/pedido/', 'POST', '::1', '2021-06-06 23:02:49'),
-(156, 'Jorgitosi', '/pedido/', 'POST', '::1', '2021-06-06 23:05:08'),
-(157, 'Jorgitosi', '/pedido/', 'POST', '::1', '2021-06-06 23:05:17'),
-(158, 'scardozo', '/pedido/prepararPedido', 'POST', '::1', '2021-06-06 23:06:16'),
-(159, 'scardozo', '/pedido/prepararPedido', 'POST', '::1', '2021-06-06 23:06:30'),
-(160, 'scardozo', '/pedido/terminarPedido?codigoPedido=fmeQz', 'POST', '::1', '2021-06-06 23:06:46'),
-(161, 'Jorgitosi', '/pedido/servirPedido', 'POST', '::1', '2021-06-06 23:07:00'),
-(162, 'Jorgitosi', '/pedido/cobrarPedido', 'POST', '::1', '2021-06-06 23:07:13'),
-(163, 'Jorgitosi', '/pedido/cobrarPedido', 'POST', '::1', '2021-06-06 23:07:19'),
-(164, 'Jorgitosi', '/pedido/', 'POST', '::1', '2021-06-06 23:07:42'),
-(165, 'scardozo', '/pedido/prepararPedido', 'POST', '::1', '2021-06-06 23:08:00'),
-(166, 'Jorgitosi', '/pedido/servirPedido', 'POST', '::1', '2021-06-06 23:08:22'),
-(167, 'Jorgitosi', '/pedido/cobrarPedido', 'POST', '::1', '2021-06-06 23:08:28');
+INSERT INTO `logs` (`id`, `usuario`, `ruta`, `metodo`, `ip`) VALUES
+(130, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(131, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(132, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(133, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(134, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(135, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(136, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(137, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(138, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(139, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(140, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(141, 'scardozo', '/productos/7', 'GET', '::1'),
+(142, 'scardozo', '/productos/', 'GET', '::1'),
+(143, 'scardozo', '/productos/7', 'GET', '::1'),
+(144, 'scardozo', '/productos/', 'GET', '::1'),
+(145, 'scardozo', '/productos/', 'GET', '::1'),
+(146, 'scardozo', '/productos/', 'GET', '::1'),
+(147, 'scardozo', '/productos/cargarUnProducto/', 'POST', '::1'),
+(148, 'scardozo', '/productos/', 'GET', '::1'),
+(149, 'scardozo', '/pedido/', 'GET', '::1'),
+(150, 'scardozo', '/mesa/modificarUna/', 'POST', '::1'),
+(151, 'scardozo', '/mesa/modificarUna/', 'POST', '::1'),
+(152, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(153, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(154, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(155, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(156, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(157, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(158, 'scardozo', '/pedido/prepararPedido', 'POST', '::1'),
+(159, 'scardozo', '/pedido/prepararPedido', 'POST', '::1'),
+(160, 'scardozo', '/pedido/terminarPedido?codigoPedido=fmeQz', 'POST', '::1'),
+(161, 'Jorgitosi', '/pedido/servirPedido', 'POST', '::1'),
+(162, 'Jorgitosi', '/pedido/cobrarPedido', 'POST', '::1'),
+(163, 'Jorgitosi', '/pedido/cobrarPedido', 'POST', '::1'),
+(164, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(165, 'scardozo', '/pedido/prepararPedido', 'POST', '::1'),
+(166, 'Jorgitosi', '/pedido/servirPedido', 'POST', '::1'),
+(167, 'Jorgitosi', '/pedido/cobrarPedido', 'POST', '::1'),
+(168, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(169, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(170, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(171, 'Jorgitosi', '/pedido/terminarPedido?codigoPedido=fmeQz', 'POST', '::1'),
+(172, 'Jorgitosi', '/pedido/servirPedido', 'POST', '::1'),
+(173, 'Jorgitosi', '/pedido/terminarPedido?codigoPedido=fmeQz', 'POST', '::1'),
+(174, 'Jorgitosi', '/pedido/servirPedido', 'POST', '::1'),
+(175, 'Jorgitosi', '/pedido/terminarPedido?codigoPedido=fmeQz', 'POST', '::1'),
+(176, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(177, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(178, 'Jorgitosi', '/pedido/terminarPedido?codigoPedido=fmeQz', 'POST', '::1'),
+(179, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(180, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(181, 'Jorgitosi', '/pedido/terminarPedido?codigoPedido=fmeQz', 'POST', '::1'),
+(182, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(183, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(184, 'scardozo', '/mesa/modificarUna/', 'POST', '::1'),
+(185, 'scardozo', '/mesa/modificarUna/', 'POST', '::1'),
+(186, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(187, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(188, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(189, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(190, 'Jorgitosi', '/pedido/terminarPedido?codigoPedido=fmeQz', 'POST', '::1'),
+(191, 'Jorgitosi', '/pedido/servirPedido', 'POST', '::1'),
+(192, 'Jorgitosi', '/pedido/servirPedido', 'POST', '::1'),
+(193, 'Jorgitosi', '/pedido/cobrarPedido', 'POST', '::1'),
+(194, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(195, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(196, 'Jorgitosi', '/pedido/', 'GET', '::1'),
+(197, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(198, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(199, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(200, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(201, 'scardozo', '/mesa/modificarUna/', 'POST', '::1'),
+(202, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(203, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(204, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(205, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(206, 'scardozo', '/mesa/modificarUna/', 'POST', '::1'),
+(207, 'Jorgitosi', '/pedido/', 'POST', '::1'),
+(208, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(209, 'Jorgitosi', '/pedido/prepararPedido', 'POST', '::1'),
+(210, 'Jorgitosi', '/pedido/servirPedido', 'POST', '::1'),
+(211, 'Jorgitosi', '/pedido/cobrarPedido', 'POST', '::1'),
+(212, 'Jorgitosi', '/pedido/cobrarPedido', 'POST', '::1'),
+(213, 'scardozo', '/usuarios/cargarUno/', 'POST', '::1'),
+(214, 'scardozo', '/usuarios/cargarUno/', 'POST', '10.158.177.55'),
+(215, 'scardozo', '/usuarios/', 'GET', '10.158.177.55'),
+(216, 'scardozo', '/usuarios/1', 'GET', '10.158.177.55'),
+(217, 'scardozo', '/productos/7', 'GET', '10.149.172.110'),
+(218, 'scardozo', '/productos/', 'GET', '10.149.172.110'),
+(219, 'scardozo', '/usuarios/bajaEmpleado/', 'POST', '10.149.172.110'),
+(220, 'scardozo', '/productos/bajaProducto/', 'POST', '10.149.172.110'),
+(221, 'scardozo', '/mesa/2', 'GET', '10.101.182.164'),
+(222, 'scardozo', '/mesa/', 'GET', '10.101.182.164'),
+(223, 'scardozo', '/pedido/217', 'GET', '10.99.241.169'),
+(224, 'scardozo', '/pedido/227', 'GET', '10.99.241.169'),
+(225, 'scardozo', '/pedido/227', 'GET', '10.99.241.169'),
+(226, 'scardozo', '/pedido/', 'GET', '10.99.241.169'),
+(227, 'scardozo', '/usuarios/cargarUno/', 'POST', '10.51.242.97'),
+(228, 'vijua', '/pedido/realizarEncuesta', 'POST', '10.51.242.97'),
+(229, 'vijua', '/pedido/realizarEncuesta', 'POST', '10.51.242.97');
 
 -- --------------------------------------------------------
 
@@ -91,7 +178,7 @@ INSERT INTO `logs` (`id`, `usuario`, `ruta`, `metodo`, `ip`, `fecha`) VALUES
 CREATE TABLE `mesas` (
   `id` int(11) NOT NULL,
   `codigoMesa` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
-  `estadoMesa` varchar(20) CHARACTER SET latin1 COLLATE latin1_spanish_ci DEFAULT NULL,
+  `estadoMesa` varchar(20) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -101,8 +188,8 @@ CREATE TABLE `mesas` (
 
 INSERT INTO `mesas` (`id`, `codigoMesa`, `estadoMesa`, `deleted_at`) VALUES
 (1, 'ME01', 'Libre', NULL),
-(2, 'ME02', 'Libre', NULL),
-(3, 'ME03', 'Libre', NULL),
+(2, 'ME02', 'Esperando', NULL),
+(3, 'ME03', 'Esperando', NULL),
 (4, 'ME04', 'Esperando', NULL),
 (5, 'ME05', 'Esperando', NULL),
 (6, 'ME06', 'Libre', '2021-06-01 22:08:28'),
@@ -124,8 +211,8 @@ CREATE TABLE `pedidos` (
   `nombreCliente` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `imagen` varchar(200) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `tiempo` varchar(11) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -133,12 +220,11 @@ CREATE TABLE `pedidos` (
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `estadoPedido`, `codigoPedido`, `codigoMesa`, `idUsuario`, `producto`, `nombreCliente`, `imagen`, `tiempo`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(217, 'Recibido', 'p5xem', 'ME03', 1, '2345', 'Juanas', 'C:\\xampp\\tmp\\php910B.tmp', '1', '2021-06-06 23:19:03', '2021-06-06 23:33:55', '2021-06-06 23:33:55'),
-(218, 'Recibido', 'zTz9h', 'ME03', 1, '2345', 'Juanas', 'C:\\xampp\\tmp\\php37EE.tmp', '1', '2021-06-06 23:40:32', '2021-06-06 23:41:35', '2021-06-06 23:41:35'),
-(219, 'Cobrado', 'fmeQz', 'ME03', 4, '1,2,3', 'Juanas', 'C:\\xampp\\tmp\\php675A.tmp', '0', '2021-06-06 23:48:21', '2021-06-07 03:01:49', NULL),
-(220, 'Cobrado', 'HBOtD', 'ME01', 15, '2345', 'Juanas', 'C:\\xampp\\tmp\\phpA3AB.tmp', '0', '2021-06-07 04:05:17', '2021-06-07 04:07:19', NULL),
-(221, 'Cobrado', 'WaMnk', 'ME01', 15, '23453', 'Juanas', 'C:\\xampp\\tmp\\phpDB2D.tmp', '0', '2021-06-07 04:07:42', '2021-06-07 04:08:28', NULL);
+INSERT INTO `pedidos` (`id`, `estadoPedido`, `codigoPedido`, `codigoMesa`, `idUsuario`, `producto`, `nombreCliente`, `imagen`, `tiempo`, `deleted_at`) VALUES
+(226, 'Cobrado', 'vOWGC', 'ME02', 15, '2345', 'Juanas', 'C:\\xampp\\tmp\\php47D.tmp', '0', NULL),
+(227, 'Recibido', 'rj3e6', 'ME02', 15, '457', 'Juanas', 'C:\\xampp\\tmp\\phpE829.tmp', '1', NULL),
+(228, 'En Preparacion', 'L2TCJ', 'ME01', 15, '457', 'Juanas', 'C:\\xampp\\tmp\\php2CE.tmp', '1', NULL),
+(229, 'Cobrado', '6JQS2', 'ME01', 15, '457', 'Juanas', 'C:\\xampp\\tmp\\phpFE13.tmp', '0', NULL);
 
 -- --------------------------------------------------------
 
@@ -174,7 +260,12 @@ INSERT INTO `productos` (`id`, `descripcion`, `precio`, `rol`, `deleted_at`) VAL
 (13, 'IPA', 300, 'Cervecero', NULL),
 (40, 'APA', 300, 'Cervecero', NULL),
 (43, 'Fanta', 250, 'Bartender', '2021-06-01 21:27:50'),
-(44, 'Pepsi', 250, 'Bartender', NULL);
+(44, 'Pepsi', 250, 'Bartender', NULL),
+(45, 'Manaos', 100, ' Bartender\r\n', NULL),
+(50, 'Manon', 200, ' Bartender\r\n', NULL),
+(51, '7up', 300, ' Mozo\r\n', NULL),
+(52, 'Flan', 400, ' Cocinero\r\n', NULL),
+(53, 'Helado', 300, ' Cocinero', NULL);
 
 -- --------------------------------------------------------
 
@@ -195,28 +286,19 @@ CREATE TABLE `productos_pedidos` (
 --
 
 INSERT INTO `productos_pedidos` (`id`, `codigoPedido`, `idProducto`, `estadoProducto`, `deleted_at`) VALUES
-(116, 'zTz9h', 2, 'Pendiente', '2021-06-06 23:41:37'),
-(117, 'zTz9h', 3, 'Pendiente', '2021-06-06 23:41:37'),
-(118, 'zTz9h', 4, 'Pendiente', '2021-06-06 23:41:37'),
-(119, 'zTz9h', 5, 'Pendiente', '2021-06-06 23:41:37'),
-(120, 'fmeQz', 2, 'Pendiente', '2021-06-06 23:59:19'),
-(121, 'fmeQz', 3, 'Pendiente', '2021-06-06 23:59:19'),
-(122, 'fmeQz', 4, 'Pendiente', '2021-06-06 23:59:19'),
-(123, 'fmeQz', 5, 'Pendiente', '2021-06-06 23:59:19'),
-(124, 'fmeQz', 0, 'Pendiente', '2021-06-07 00:00:19'),
-(125, 'fmeQz', 123, 'Pendiente', '2021-06-07 00:00:44'),
-(126, 'fmeQz', 1, 'Servido', NULL),
-(127, 'fmeQz', 2, 'Servido', NULL),
-(128, 'fmeQz', 3, 'Servido', NULL),
-(129, 'HBOtD', 2, 'Servido', NULL),
-(130, 'HBOtD', 3, 'Servido', NULL),
-(131, 'HBOtD', 4, 'Servido', NULL),
-(132, 'HBOtD', 5, 'Servido', NULL),
-(133, 'WaMnk', 2, 'Servido', NULL),
-(134, 'WaMnk', 3, 'Servido', NULL),
-(135, 'WaMnk', 4, 'Servido', NULL),
-(136, 'WaMnk', 5, 'Servido', NULL),
-(137, 'WaMnk', 3, 'Servido', NULL);
+(156, 'vOWGC', 2, 'Listo Para Servir', NULL),
+(157, 'vOWGC', 3, 'Listo Para Servir', NULL),
+(158, 'vOWGC', 4, 'Listo Para Servir', NULL),
+(159, 'vOWGC', 5, 'Listo Para Servir', NULL),
+(160, 'rj3e6', 4, 'Pendiente', NULL),
+(161, 'rj3e6', 5, 'Pendiente', NULL),
+(162, 'rj3e6', 7, 'Pendiente', NULL),
+(163, 'L2TCJ', 4, 'En Preparacion', NULL),
+(164, 'L2TCJ', 5, 'En Preparacion', NULL),
+(165, 'L2TCJ', 7, 'Pendiente', NULL),
+(166, '6JQS2', 4, 'Servido', NULL),
+(167, '6JQS2', 5, 'Servido', NULL),
+(168, '6JQS2', 7, 'Servido', NULL);
 
 -- --------------------------------------------------------
 
@@ -231,6 +313,7 @@ CREATE TABLE `usuarios` (
   `rol` varchar(11) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `usuario` varchar(60) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `clave` varchar(10) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  `estadoEmpleado` varchar(30) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -238,22 +321,14 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `rol`, `usuario`, `clave`, `deleted_at`) VALUES
-(1, 'Sergio', 'Cardozo', 'Socio', 'scardozo', '1234', NULL),
-(2, 'Mariano', 'Madou', 'Socio', 'mmadou', '$2y$10$cSL', NULL),
-(3, 'Franco', 'Lippi', 'Socio', 'flippi', '$2y$10$YhB', NULL),
-(4, 'Francos', 'Lippis', 'Socio', 'flippis', '1234', NULL),
-(5, 'Sergio', 'Cardozo', 'Socio', 'scardozo', '1234', '2021-06-01 18:52:18'),
-(6, 'Francos', 'Lippis', 'Socio', 'flippis', '1234', NULL),
-(7, 'Jorge', 'Asd', 'Socio', 'Jorgito', '1234', NULL),
-(8, 'Jorge', 'Asd', 'Socio', 'Jorgito', '1234', NULL),
-(9, 'Jorge', 'Asd', 'Socio', 'Jorgito', '1234', NULL),
-(10, 'Jorge', 'Asd', 'Socio', 'Jorgito', '1234', NULL),
-(11, 'Jorge', 'Asd', 'Socio', 'Jorgito', '1234', NULL),
-(12, 'Jorge', 'Asd', 'Socio', 'Jorgito', '1234', NULL),
-(13, 'Jorgea', 'Asds', 'Socio', 'Jorgitos', '1234', NULL),
-(14, 'Roberto', 'bolaños', 'Mozo', 'Jorgitos', '1234', NULL),
-(15, 'Robertito', 'bolañosito', 'Mozo', 'Jorgitosi', '1234', NULL);
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `rol`, `usuario`, `clave`, `estadoEmpleado`, `deleted_at`) VALUES
+(1, 'Sergio', 'Cardozo', 'Socio', 'scardozo', '1234', 'Activo', NULL),
+(2, 'Mariano', 'Madou', 'Socio', 'mmadou', '$2y$10$cSL', 'Activo', NULL),
+(3, 'Franco', 'Lippi', 'Socio', 'flippi', '$2y$10$YhB', 'Activo', NULL),
+(14, 'Roberto', 'bolaños', 'Mozo', 'Jorgitos', '1234', 'Inactivo', NULL),
+(15, 'Robertito', 'bolañosito', 'Mozo', 'Jorgitosi', '1234', 'Inactivo', NULL),
+(16, 'Jorge', 'Fulanito', 'Bartender', 'Jofu', '1234', 'Activo', NULL),
+(17, 'Viviana', 'Juarez', 'Mozo', 'vijua', '1234', 'Activo', NULL);
 
 -- --------------------------------------------------------
 
@@ -267,7 +342,7 @@ CREATE TABLE `ventas` (
   `mesa` varchar(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `usuario` varchar(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   `precioTotal` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `ventas`
@@ -276,11 +351,19 @@ CREATE TABLE `ventas` (
 INSERT INTO `ventas` (`id`, `codigoPedido`, `mesa`, `usuario`, `precioTotal`) VALUES
 (11, 'fmeQz', 'ME03', 'flippis', 800),
 (12, 'HBOtD', 'ME01', 'Jorgitosi', 700),
-(13, 'WaMnk', 'ME01', 'Jorgitosi', 950);
+(13, 'WaMnk', 'ME01', 'Jorgitosi', 950),
+(14, 'vOWGC', 'ME02', 'Jorgitosi', 700),
+(15, '6JQS2', 'ME01', 'Jorgitosi', 1000);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `encuestas`
+--
+ALTER TABLE `encuestas`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `logs`
@@ -329,10 +412,16 @@ ALTER TABLE `ventas`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `encuestas`
+--
+ALTER TABLE `encuestas`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=230;
 
 --
 -- AUTO_INCREMENT de la tabla `mesas`
@@ -344,31 +433,31 @@ ALTER TABLE `mesas`
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=230;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de la tabla `productos_pedidos`
 --
 ALTER TABLE `productos_pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=169;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

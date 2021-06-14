@@ -6,22 +6,40 @@
 	},
 	"item": [
 		{
-			"name": "Usuarios",
+			"name": "Login",
 			"item": [
 				{
-					"name": "Get solo uno por nombre",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "IniciarSesion",
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "formdata",
-							"formdata": []
+							"formdata": [
+								{
+									"key": "usuario",
+									"value": "vijua",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "1234",
+									"type": "text"
+								}
+							]
 						},
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/sergio",
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/login/iniciarSesion/",
 							"protocol": "https",
 							"host": [
 								"tpcomanda-cardozosergio",
@@ -29,37 +47,50 @@
 								"com"
 							],
 							"path": [
-								"usuarios",
-								"sergio"
+								"login",
+								"iniciarSesion",
+								""
 							]
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
 				{
-					"name": "Get todos",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "Post Usuarios",
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjgxOTYsImV4cCI6MTYyMzY4ODE5NiwiYXVkIjoiMmNjM2MyMzAzNmE5NzZmNGE5MGU0M2MwNTM1NjQxNzNhYTE5NDUxNCIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.wA-xPfK5IfSkSaI7lsJ-fCYqoHWMaIAoZDI9r5TyJUA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
 									"key": "nombre",
-									"value": "sergio",
+									"value": "Viviana",
 									"type": "text"
 								},
 								{
 									"key": "apellido",
-									"value": "cardozo",
+									"value": "Juarez",
 									"type": "text"
 								},
 								{
-									"key": "idRol",
-									"value": "4",
+									"key": "rol",
+									"value": "Mozo",
 									"type": "text"
 								},
 								{
@@ -69,13 +100,18 @@
 								},
 								{
 									"key": "usuario",
-									"value": "scard",
+									"value": "vijua",
+									"type": "text"
+								},
+								{
+									"key": "estadoEmpleado",
+									"value": "Activo",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/",
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/cargarUno/",
 							"protocol": "https",
 							"host": [
 								"tpcomanda-cardozosergio",
@@ -84,6 +120,7 @@
 							],
 							"path": [
 								"usuarios",
+								"cargarUno",
 								""
 							]
 						}
@@ -91,50 +128,100 @@
 					"response": []
 				},
 				{
-					"name": "Post Alta Usuario",
+					"name": "Traer todos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/1",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put Usuarios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
+									"key": "id",
+									"value": "5",
+									"type": "text"
+								},
+								{
 									"key": "nombre",
-									"value": "",
+									"value": "Sergio",
 									"type": "text"
 								},
 								{
 									"key": "apellido",
-									"value": "",
+									"value": "Cardozo",
 									"type": "text"
 								},
 								{
-									"key": "idRol",
-									"value": "",
-									"type": "text"
-								},
-								{
-									"key": "clave",
-									"value": "",
+									"key": "rol",
+									"value": "Socio",
 									"type": "text"
 								},
 								{
 									"key": "usuario",
-									"value": "",
+									"value": "scardozo",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "Activo",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/",
-							"protocol": "https",
+							"raw": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iYusuarios/modificarUno/",
 							"host": [
-								"tpcomanda-cardozosergio",
-								"herokuapp",
-								"com"
+								"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9",
+								"eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ",
+								"JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iYusuarios"
 							],
 							"path": [
-								"usuarios",
+								"modificarUno",
 								""
 							]
 						}
@@ -142,37 +229,38 @@
 					"response": []
 				},
 				{
-					"name": "Put Usuarios por nombre",
+					"name": "Baja Usuarios",
 					"request": {
-						"method": "PUT",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
 								{
 									"key": "id",
-									"value": "",
+									"value": "78",
 									"type": "text"
 								},
 								{
-									"key": "nombre",
-									"value": "sergio",
-									"type": "text"
-								},
-								{
-									"key": "clave",
-									"value": "4567",
-									"type": "text"
-								},
-								{
-									"key": "usuario",
-									"value": "asdasd",
-									"type": "text"
+									"key": "estado",
+									"value": "Activo",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/",
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/bajaEmpleado/",
 							"protocol": "https",
 							"host": [
 								"tpcomanda-cardozosergio",
@@ -181,42 +269,42 @@
 							],
 							"path": [
 								"usuarios",
+								"bajaEmpleado",
 								""
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				},
 				{
-					"name": "Delete usuario por id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "id",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/usuarios/",
-							"protocol": "https",
-							"host": [
-								"tpcomanda-cardozosergio",
-								"herokuapp",
-								"com"
-							],
-							"path": [
-								"usuarios",
-								""
-							]
-						}
-					},
-					"response": []
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -224,58 +312,22 @@
 			"name": "Productos",
 			"item": [
 				{
-					"name": "Post Insertar producto",
+					"name": "Get Producto descripcion",
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "descripcion",
-									"value": "Sprite",
-									"type": "text"
-								},
-								{
-									"key": "precio",
-									"value": "250",
-									"type": "text"
-								},
-								{
-									"key": "idRol",
-									"value": "5",
-									"type": "text"
-								},
-								{
-									"key": "tiempoPreparacion",
-									"value": "3",
-									"type": "text"
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
 								}
 							]
 						},
-						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/",
-							"protocol": "https",
-							"host": [
-								"tpcomanda-cardozosergio",
-								"herokuapp",
-								"com"
-							],
-							"path": [
-								"productos",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Producto descripcion",
-					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/Sprite",
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/7",
 							"protocol": "https",
 							"host": [
 								"tpcomanda-cardozosergio",
@@ -284,7 +336,7 @@
 							],
 							"path": [
 								"productos",
-								"Sprite"
+								"7"
 							]
 						}
 					},
@@ -293,6 +345,16 @@
 				{
 					"name": "Get traer todos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -305,6 +367,64 @@
 							],
 							"path": [
 								"productos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Insertar producto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMwMTcxMTQsImV4cCI6MTYyMzA3NzExNCwiYXVkIjoiMTRjYmQzYjJjMmViZmEyOTBmM2IyYmRhOWNhNGFkMjVmNzUxMmZmNCIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIn0sImFwcCI6IlRlc3QgSldUIn0.5MrElk5i9JlCvlqqUIcFsWLLeAHRdGzae96rUc5rYYk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "descripcion",
+									"value": "Pepsi",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "250",
+									"type": "text"
+								},
+								{
+									"key": "rol",
+									"value": "Bartender",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "En Stock",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/cargarUnProducto/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"productos",
+								"cargarUnProducto",
 								""
 							]
 						}
@@ -314,30 +434,45 @@
 				{
 					"name": "Modificar producto por descripcion",
 					"request": {
-						"method": "PUT",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjIwMzg2MjcsImV4cCI6MTYyMjA5ODYyNywiYXVkIjoiMTRjYmQzYjJjMmViZmEyOTBmM2IyYmRhOWNhNGFkMjVmNzUxMmZmNCIsImRhdGEiOlt7ImlkIjoxLCJub21icmUiOiJTZXJnaW8iLCJhcGVsbGlkbyI6IkNhcmRvem8iLCJyb2wiOiJTb2NpbyIsImNsYXZlIjoiJDJ5JDEwJGhKRiIsInVzdWFyaW8iOiJzY2FyZG96byIsImVzdGFkbyI6IkFjdGl2byJ9XSwiYXBwIjoiVGVzdCBKV1QifQ.oZLMV1_Zqu55tXjJYMg6l3aHc4fvD-0H9zkee6wDPY8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
 								{
 									"key": "descripcion",
-									"value": "Sprite",
+									"value": "Coca-Cola",
 									"type": "text"
 								},
 								{
 									"key": "precio",
-									"value": "400",
+									"value": "300",
 									"type": "text"
 								},
 								{
-									"key": "tiempoPreparacion",
-									"value": "10",
+									"key": "rol",
+									"value": "Bartender",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/",
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/modificarUno/",
 							"protocol": "https",
 							"host": [
 								"tpcomanda-cardozosergio",
@@ -346,6 +481,7 @@
 							],
 							"path": [
 								"productos",
+								"modificarUno",
 								""
 							]
 						}
@@ -353,22 +489,38 @@
 					"response": []
 				},
 				{
-					"name": "Borrar producto por descripcion",
+					"name": "Baja Producto",
 					"request": {
-						"method": "DELETE",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
 								{
-									"key": "descripcion",
-									"value": "Sprite",
+									"key": "id",
+									"value": "78",
 									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "En Stock",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/",
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/productos/bajaProducto/",
 							"protocol": "https",
 							"host": [
 								"tpcomanda-cardozosergio",
@@ -377,11 +529,42 @@
 							],
 							"path": [
 								"productos",
+								"bajaProducto",
 								""
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMxMDIzMDAsImV4cCI6MTYyMzE2MjMwMCwiYXVkIjoiMTRjYmQzYjJjMmViZmEyOTBmM2IyYmRhOWNhNGFkMjVmNzUxMmZmNCIsImRhdGEiOnsiaWQiOjE1LCJ1c3VhcmlvIjoiSm9yZ2l0b3NpIiwicm9sIjoiTW96byIsIm5vbWJyZSI6IlJvYmVydGl0byIsImFwZWxsaWRvIjoiYm9sYVx1MDBmMW9zaXRvIn0sImFwcCI6IlRlc3QgSldUIn0.20Q371PtcWKmGZcm4JiQVGrBS5X1cgahc36DPQ3d5zQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -389,25 +572,51 @@
 			"name": "Mesas",
 			"item": [
 				{
-					"name": "Post Insertar mesa",
+					"name": "Traer Una Mesa",
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "codigoMesa",
-									"value": "ME01",
-									"type": "text"
-								},
-								{
-									"key": "idEstadoMesa",
-									"value": "3",
-									"type": "text"
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
 								}
 							]
 						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/2",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"mesa",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Todas las mesas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/",
 							"protocol": "https",
@@ -425,31 +634,30 @@
 					"response": []
 				},
 				{
-					"name": "Traer Una Mesa",
+					"name": "Post Insertar mesa",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/ME01",
-							"protocol": "https",
-							"host": [
-								"tpcomanda-cardozosergio",
-								"herokuapp",
-								"com"
-							],
-							"path": [
-								"mesa",
-								"ME01"
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Traer Todas las mesas",
-					"request": {
-						"method": "GET",
+						},
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoMesa",
+									"value": "ME06",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
 							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/",
 							"protocol": "https",
@@ -469,25 +677,40 @@
 				{
 					"name": "Modificar una mesa",
 					"request": {
-						"method": "PUT",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
 								{
 									"key": "codigoMesa",
 									"value": "ME01",
 									"type": "text"
 								},
 								{
-									"key": "idEstadoMesa",
-									"value": "2",
+									"key": "estadoMesa",
+									"value": "Libre",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/",
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/modificarUna/",
 							"protocol": "https",
 							"host": [
 								"tpcomanda-cardozosergio",
@@ -496,6 +719,7 @@
 							],
 							"path": [
 								"mesa",
+								"modificarUna",
 								""
 							]
 						}
@@ -503,22 +727,38 @@
 					"response": []
 				},
 				{
-					"name": "Borrar una mesa",
+					"name": "BajaMesa",
 					"request": {
-						"method": "DELETE",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
 								{
 									"key": "id",
-									"value": "1",
+									"value": "6",
 									"type": "text"
+								},
+								{
+									"key": "estadoMesa",
+									"value": "Libre",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/",
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/mesa/bajaMesa/",
 							"protocol": "https",
 							"host": [
 								"tpcomanda-cardozosergio",
@@ -527,11 +767,42 @@
 							],
 							"path": [
 								"mesa",
+								"bajaMesa",
 								""
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMxMDIzMDAsImV4cCI6MTYyMzE2MjMwMCwiYXVkIjoiMTRjYmQzYjJjMmViZmEyOTBmM2IyYmRhOWNhNGFkMjVmNzUxMmZmNCIsImRhdGEiOnsiaWQiOjE1LCJ1c3VhcmlvIjoiSm9yZ2l0b3NpIiwicm9sIjoiTW96byIsIm5vbWJyZSI6IlJvYmVydGl0byIsImFwZWxsaWRvIjoiYm9sYVx1MDBmMW9zaXRvIn0sImFwcCI6IlRlc3QgSldUIn0.20Q371PtcWKmGZcm4JiQVGrBS5X1cgahc36DPQ3d5zQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -539,57 +810,22 @@
 			"name": "Pedidos",
 			"item": [
 				{
-					"name": "Insertar Pedidos",
+					"name": "Traer Uno",
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "idEstadoPedido",
-									"value": "2",
-									"type": "text"
-								},
-								{
-									"key": "codigoPedido",
-									"value": "AAAAA",
-									"type": "text"
-								},
-								{
-									"key": "codigoMesa",
-									"value": "ME02",
-									"type": "text"
-								},
-								{
-									"key": "idUsuario",
-									"value": "2",
-									"type": "text"
-								},
-								{
-									"key": "producto",
-									"value": "Sprite",
-									"type": "text"
-								},
-								{
-									"key": "nombreCliente",
-									"value": "Jorge",
-									"type": "text"
-								},
-								{
-									"key": "imagen",
-									"type": "file",
-									"src": "/C:/Users/sergp/Documents/PROG3/mesa-tolix.jpg"
-								},
-								{
-									"key": "tiempo",
-									"value": "30",
-									"type": "text"
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
 								}
 							]
 						},
+						"method": "GET",
+						"header": [],
 						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/",
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/227",
 							"protocol": "https",
 							"host": [
 								"tpcomanda-cardozosergio",
@@ -598,7 +834,7 @@
 							],
 							"path": [
 								"pedido",
-								""
+								"227"
 							]
 						}
 					},
@@ -607,6 +843,16 @@
 				{
 					"name": "Traer Todos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -626,41 +872,30 @@
 					"response": []
 				},
 				{
-					"name": "Traer Uno",
+					"name": "Modificar por id",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/Jorge",
-							"protocol": "https",
-							"host": [
-								"tpcomanda-cardozosergio",
-								"herokuapp",
-								"com"
-							],
-							"path": [
-								"pedido",
-								"Jorge"
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Modificar por codigo pedido",
-					"request": {
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "idEstadoPedido",
-									"value": "2",
+									"key": "id",
+									"value": "219",
 									"type": "text"
 								},
 								{
-									"key": "codigoMesa",
+									"key": "producto",
 									"value": "ME04",
 									"type": "text"
 								},
@@ -671,12 +906,12 @@
 								},
 								{
 									"key": "producto",
-									"value": "Sprite",
+									"value": "1,2,3",
 									"type": "text"
 								},
 								{
 									"key": "codigoPedido",
-									"value": "AAAAA",
+									"value": "fmeQz",
 									"type": "text"
 								}
 							]
@@ -700,6 +935,16 @@
 				{
 					"name": "Borrar pedido por id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -707,7 +952,7 @@
 							"urlencoded": [
 								{
 									"key": "id",
-									"value": "1",
+									"value": "218",
 									"type": "text"
 								}
 							]
@@ -723,6 +968,584 @@
 							"path": [
 								"pedido",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insertar Pedidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "producto",
+									"value": "4,5,7",
+									"type": "text"
+								},
+								{
+									"key": "nombreCliente",
+									"value": "Juanas",
+									"type": "text"
+								},
+								{
+									"key": "imagen",
+									"type": "file",
+									"src": "/C:/Users/sergp/Documents/PROG3/mesa-tolix.jpg"
+								},
+								{
+									"key": "codigoPedido",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PrepararPedido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoPedido",
+									"value": "9hy28",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/prepararPedido",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								"prepararPedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Terminar Pedido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoPedido",
+									"value": "9hy28",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/terminarPedido?codigoPedido=fmeQz",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								"terminarPedido"
+							],
+							"query": [
+								{
+									"key": "codigoPedido",
+									"value": "fmeQz"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Servir Pedido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoPedido",
+									"value": "9hy28",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/servirPedido",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								"servirPedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedir Cuenta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjU4NDgsImV4cCI6MTYyMzY4NTg0OCwiYXVkIjoiOTY1Zjg2ODljNTcxYzNiYTZkOTNhNTkzMGU3Njg4MDNlYjA4NTFkYiIsImRhdGEiOnsiaWQiOjEsInVzdWFyaW8iOiJzY2FyZG96byIsInJvbCI6IlNvY2lvIiwibm9tYnJlIjoiU2VyZ2lvIiwiYXBlbGxpZG8iOiJDYXJkb3pvIiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.JM6bLD35Y8pkILGISEpRtcnlCP_aifDtyhGiCboK3iY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoPedido",
+									"value": "9hy28",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/cobrarPedido",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								"cobrarPedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Encuesta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MjgyMjgsImV4cCI6MTYyMzY4ODIyOCwiYXVkIjoiMmNjM2MyMzAzNmE5NzZmNGE5MGU0M2MwNTM1NjQxNzNhYTE5NDUxNCIsImRhdGEiOnsiaWQiOjE3LCJ1c3VhcmlvIjoidmlqdWEiLCJyb2wiOiJNb3pvIiwibm9tYnJlIjoiVml2aWFuYSIsImFwZWxsaWRvIjoiSnVhcmV6IiwiZXN0YWRvRW1wbGVhZG8iOiJBY3Rpdm8ifSwiYXBwIjoiVGVzdCBKV1QifQ.xYCfpRwL84CdWtqp1r9H762pNUXjKdC5gDFPZf0rOuk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoPedido",
+									"value": "L2TCJ",
+									"type": "text"
+								},
+								{
+									"key": "puntosMesa",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "puntosMozo",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "puntosRestaurante",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "puntosCocinero",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "comentarios",
+									"value": "No vuelvo nunca mas",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/pedido/realizarEncuesta",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"pedido",
+								"realizarEncuesta"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMxMDIzMDAsImV4cCI6MTYyMzE2MjMwMCwiYXVkIjoiMTRjYmQzYjJjMmViZmEyOTBmM2IyYmRhOWNhNGFkMjVmNzUxMmZmNCIsImRhdGEiOnsiaWQiOjE1LCJ1c3VhcmlvIjoiSm9yZ2l0b3NpIiwicm9sIjoiTW96byIsIm5vbWJyZSI6IlJvYmVydGl0byIsImFwZWxsaWRvIjoiYm9sYVx1MDBmMW9zaXRvIn0sImFwcCI6IlRlc3QgSldUIn0.20Q371PtcWKmGZcm4JiQVGrBS5X1cgahc36DPQ3d5zQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Informes",
+			"item": [
+				{
+					"name": "Mesa Mas Usada",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/informes/mesaMasUsada",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"informes",
+								"mesaMasUsada"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa Menos Usada",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/informes/mesaMenosUsada",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"informes",
+								"mesaMenosUsada"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa que mas facturo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/informes/mesaMayorImporte",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"informes",
+								"mesaMayorImporte"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mesa que menos facturo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/informes/mesaMenorImporte",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"informes",
+								"mesaMenorImporte"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Ingresos al sistema",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/informes/ingresosAlSistema",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"informes",
+								"ingresosAlSistema"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Peor Comentario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/informes/peorComentario",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"informes",
+								"peorComentario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mejor Comentario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/informes/mejorComentario",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"informes",
+								"mejorComentario"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMxMDIzMDAsImV4cCI6MTYyMzE2MjMwMCwiYXVkIjoiMTRjYmQzYjJjMmViZmEyOTBmM2IyYmRhOWNhNGFkMjVmNzUxMmZmNCIsImRhdGEiOnsiaWQiOjE1LCJ1c3VhcmlvIjoiSm9yZ2l0b3NpIiwicm9sIjoiTW96byIsIm5vbWJyZSI6IlJvYmVydGl0byIsImFwZWxsaWRvIjoiYm9sYVx1MDBmMW9zaXRvIn0sImFwcCI6IlRlc3QgSldUIn0.20Q371PtcWKmGZcm4JiQVGrBS5X1cgahc36DPQ3d5zQ",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Archivos",
+			"item": [
+				{
+					"name": "Descargar PDF Ventas Realizadas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoPedido",
+									"value": "vOWGC",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/archivo/pdf",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"archivo",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargar Archivo CSV",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/C:/Users/sergp/Desktop/CargaCSV.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://tpcomanda-cardozosergio.herokuapp.com/archivo/cargaCSV",
+							"protocol": "https",
+							"host": [
+								"tpcomanda-cardozosergio",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"archivo",
+								"cargaCSV"
 							]
 						}
 					},
