@@ -41,7 +41,7 @@ $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 
 //Eloquent
-/* $container=$app->getContainer();
+$container=$app->getContainer();
 
 $capsule = new Capsule;
 $capsule->addConnection([
@@ -53,8 +53,8 @@ $capsule->addConnection([
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
-]); */
-$container = $app->getContainer();
+]);
+/* $container = $app->getContainer();
 
 $capsule = new Capsule;
 $capsule->addConnection([
@@ -66,7 +66,7 @@ $capsule->addConnection([
   'charset'   => 'utf8',
   'collation' => 'utf8_unicode_ci',
   'prefix'    => '',
-]);
+]); */
 
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
