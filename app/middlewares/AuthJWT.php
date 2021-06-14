@@ -81,4 +81,3 @@ class AutentificadorJWT {
         return sha1($aud);
     }
 }
-?>

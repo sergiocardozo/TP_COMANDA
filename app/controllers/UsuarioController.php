@@ -142,6 +142,7 @@ class UsuarioController implements IApiUsable
       if($usuario[0]['estadoEmpleado'] == "Activo"){
 
         unset($usuario[0]['clave']);
+        
         $token = AutentificadorJWT::CrearToken($usuario[0]);
         $payload = json_encode(array('jwt' => $token  . ' Usuario: ' . $usuario[0]['usuario']));
       } else {

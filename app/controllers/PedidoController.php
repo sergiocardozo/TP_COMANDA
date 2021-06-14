@@ -247,9 +247,9 @@ class PedidoController implements IApiUsable
     $respuesta = self::CambiarEstadoPedidosProducto($parametros["codigoPedido"], $data->rol, "En Preparacion", "Listo Para Servir");
 
     if ($respuesta) {
-      $data = Productos_pedidos::where('codigoPedido', $parametros["codigoPedido"])->get();
+      $datos = Productos_pedidos::where('codigoPedido', $parametros["codigoPedido"])->get();
       $completo = true;
-      foreach ($data as $value) {
+      foreach ($datos as $value) {
         if ($value->estadoProducto != "Listo Para Servir") {
           $completo = false;
         }
