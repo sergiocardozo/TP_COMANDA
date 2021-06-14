@@ -70,7 +70,7 @@ class ManejoArchivos
             $pdf->Cell(55, 0, 'GRACIAS POR ELEGIRNOS VUELVA PRONTO!', 0, 1, 'C');
             $pdf->Ln(3);
             $pdf->Output('F', './archivos/ticket'.$datos->codigoPedido.'.pdf', 'I');
-            $payload = json_encode(array("mensaje"));
+            $payload = json_encode(array("mensaje" => 'archivo generado /archivos/ticket'.$datos->codigoPedido));
 
 
             $response->getBody()->write($payload);
