@@ -34,7 +34,7 @@ class Informes
         if ($mesasIguales == false) {
             $payload = json_encode(array("mensaje" => "La mesa mas usada es: " . $mesaMasUsada));
         } else {
-            $payload = json_encode(array("mensaje" => "No hay una mesa que se haya usado mas que la otra" . $valores));
+            $payload = json_encode(array("mensaje" => "No hay una mesa que se haya usado mas que la otra. Cantidad de veces utilizada" . $valores));
         }
         $response->getBody()->write($payload);
         return $response
@@ -67,7 +67,7 @@ class Informes
         if ($mesasIguales == false) {
             $payload = json_encode(array("mensaje" => "La mesa mas usada es: " . $mesaMenosUsada));
         } else {
-            $payload = json_encode(array("mensaje" => "No hay una mesa que se haya usado mas que la otra"));
+            $payload = json_encode(array("mensaje" => "No hay una mesa que se haya usado mas que la otra. Cantidad de veces utilizada: " . $menor));
         }
         $response->getBody()->write($payload);
         return $response
@@ -92,7 +92,7 @@ class Informes
         if ($mesasIguales == false) {
             $payload = json_encode(array("La mesa que mas facturo es la: " . $mesaQueMasFacturo . " y la cantidad es de: " . $mayor));
         } else {
-            $payload = json_encode(array("No hay una mesa que haya facturado mas que la otra"));
+            $payload = json_encode(array("No hay una mesa que haya facturado mas que la otra. El mayor total fue " . $mayor));
         }
         $response->getBody()->write($payload);
         return $response
@@ -119,7 +119,7 @@ class Informes
         if ($mesasIguales == false) {
             $payload = json_encode(array("La mesa que mas facturo es la: " . $mesaMenorPuntaje . " y la cantidad es de: " . $menor));
         } else {
-            $payload = json_encode(array("No hay una mesa que haya facturado menos que la otra"));
+            $payload = json_encode(array("No hay una mesa que haya facturado menos que la otra. El menor precio fue " . $menor));
         }
         $response->getBody()->write($payload);
         return $response
@@ -150,7 +150,7 @@ class Informes
         if ($mesasIguales == false) {
             $payload = json_encode(array("La mesa que mas facturo es la: " . $mesaMenorPuntaje . " y su comentario fue: " . $comentario));
         } else {
-            $payload = json_encode(array("No hay una mesa que haya facturado menos que la otra"));
+            $payload = json_encode(array("El puntaje minimo de la mesa es: " . $menor));
         }
         $response->getBody()->write($payload);
         return $response
@@ -158,7 +158,6 @@ class Informes
     }
     public function TraerMesaMejorComentario($request, $response, $args)
     {
-
         $primerVuelta = true;
         $mesasIguales = false;
         $mayor = "";
@@ -167,7 +166,7 @@ class Informes
 
         foreach ($encuesta as $value) {
             if ($value->puntosMesa > $mayor || $primerVuelta == true) {
-                $menor = $value->puntosMesa;
+                $mayor = $value->puntosMesa;
                 $productos = Pedido::where('codigoPedido', '=', $value->codigoPedido)->get();
                 foreach ($productos as $prod) {
                     $mesaMayorPuntaje = $prod->codigoMesa;
@@ -181,7 +180,7 @@ class Informes
         if ($mesasIguales == false) {
             $payload = json_encode(array("La mesa con mayor puntos es la: " . $mesaMayorPuntaje . " pedido: " . $value->codigoPedido . " y el comentario fue " . $value->comentarios));
         } else {
-            $payload = json_encode(array("El puntaje minimo de la mesa es: " . $menor));
+            $payload = json_encode(array("El puntaje minimo de la mesa es: " . $mayor));
         }
         $response->getBody()->write($payload);
         return $response
